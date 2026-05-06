@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>草徑 · Taiwan Native Planting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Noto+Serif+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#FFFFFF; --off:#F8F8F6;
+  --g10:#EBEBEB; --g20:#D0D0D0;
+  --g50:#808080; --g70:#404040;
+  --g80:#1E1E1E; --black:#0A0A0A;
+  --line:rgba(10,10,10,.10); --line-md:rgba(10,10,10,.20);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--black);
+  min-height:100vh;max-width:430px;margin:0 auto;overflow-x:hidden}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;flex-direction:column;animation:fadeIn .35s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SPLASH */
+#s0{background:var(--white);justify-content:space-between;position:relative;overflow:hidden}
+.splash-grid{position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+  linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:40px 40px}
+.splash-top{position:relative;padding:3.5rem 2rem 0;flex:1;display:flex;flex-direction:column;justify-content:center}
+.splash-eyebrow{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--g50);margin-bottom:2.5rem}
+.splash-title{font-family:'Cormorant Garamond',serif;font-size:5.5rem;font-weight:300;
+  line-height:.9;color:var(--black);letter-spacing:-.02em}
+.splash-title em{font-style:italic;font-weight:300;color:var(--g50)}
+.splash-tagline{font-family:'Noto Serif TC',serif;font-weight:300;font-size:.95rem;
+  color:var(--g80);line-height:2;margin-top:2rem;border-left:2px solid var(--g20);padding-left:1rem}
+.splash-bottom{position:relative;padding:2rem;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between}
+.splash-meta{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;
+  color:var(--g50);text-transform:uppercase;line-height:1.8}
+.splash-btn{background:var(--black);color:var(--white);border:none;cursor:pointer;
+  padding:.85rem 1.75rem;font-family:'DM Mono',monospace;font-size:.62rem;
+  letter-spacing:.12em;text-transform:uppercase;transition:all .2s}
+.splash-btn:active{background:var(--g70)}
+
+/* NAV */
+.topnav{position:sticky;top:0;z-index:100;background:var(--white);
+  border-bottom:1px solid var(--line);padding:.85rem 1.5rem;
+  display:flex;align-items:center;gap:.75rem}
+.topnav-back{background:none;border:none;cursor:pointer;color:var(--black);
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.05em;padding:.2rem}
+.topnav-title{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g70);flex:1}
+.topnav-step{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--g50);letter-spacing:.05em}
+.progress-bar{height:1px;background:var(--line)}
+.progress-fill{height:100%;background:var(--black);transition:width .4s ease}
+
+/* BODY */
+.screen-body{flex:1;overflow-y:auto;padding:2rem 1.5rem 7rem}
+.section-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--g70);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.75rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.page-heading{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;
+  line-height:1.1;margin-bottom:.6rem;color:var(--black)}
+.page-heading em{font-style:italic;color:var(--g50)}
+.page-subtext{font-size:.88rem;color:var(--g70);line-height:1.85;margin-bottom:2.5rem;font-weight:300}
+
+/* FORMS */
+.form-group{margin-bottom:1.5rem}
+.form-label{display:block;font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:.08em;color:var(--g70);margin-bottom:.55rem;text-transform:uppercase}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--white);border:none;
+  border-bottom:1px solid var(--line-md);padding:.75rem 0;font-family:'Noto Serif TC',serif;
+  font-size:.95rem;color:var(--black);outline:none;transition:border-color .2s;
+  -webkit-appearance:none;border-radius:0}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-bottom-color:var(--black)}
+.form-textarea{min-height:72px;resize:none;line-height:1.7}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{background:transparent;border:1px solid var(--g20);padding:.42rem .9rem;
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.05em;
+  cursor:pointer;transition:all .15s;color:var(--g70)}
+.chip.selected{background:var(--black);border-color:var(--black);color:var(--white)}
+
+.data-status{display:flex;align-items:center;gap:.6rem;font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.08em;padding:.5rem .9rem;border:1px solid var(--g10);
+  color:var(--g70);margin-bottom:2rem;text-transform:uppercase}
+.data-dot{width:5px;height:5px;border-radius:50%;background:var(--g50);flex-shrink:0}
+.divider{height:1px;background:var(--line);margin:1.5rem 0}
+
+/* STYLE CARDS */
+.style-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.style-card{background:var(--white);cursor:pointer;transition:background .15s;position:relative;overflow:hidden}
+.style-card.selected{background:var(--off)}
+.style-card-img{width:100%;aspect-ratio:1.3/1;display:flex;align-items:center;
+  justify-content:center;font-size:2.2rem;border-bottom:1px solid var(--line)}
+.style-card-body{padding:.8rem}
+.style-card-name{font-family:'Noto Serif TC',serif;font-size:.9rem;font-weight:400;
+  margin-bottom:.3rem;color:var(--black)}
+.style-card-desc{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--g70);line-height:1.65}
+.style-check{position:absolute;top:.6rem;right:.6rem;width:18px;height:18px;
+  border:1px solid var(--black);background:var(--black);color:var(--white);
+  display:none;align-items:center;justify-content:center;font-size:.6rem}
+.style-card.selected .style-check{display:flex}
+.sb1{background:var(--off)}.sb2{background:#F0EDE8}.sb3{background:#ECEEF0}.sb4{background:#EAE9E6}
+
+.climate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line)}
+.climate-item{background:var(--white);padding:.85rem .5rem;text-align:center;
+  cursor:pointer;transition:background .15s}
+.climate-item.selected{background:var(--black)}
+.climate-item.selected .climate-label{color:var(--g20)}
+.climate-icon{font-size:1.3rem;margin-bottom:.35rem}
+.climate-label{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--g70);line-height:1.5}
+
+/* ── COLOR TONE SELECTOR ─────────────────────── */
+.color-select-wrap{position:relative;margin-bottom:0}
+.color-select{
+  width:100%;background:var(--white);border:none;
+  border-bottom:1px solid var(--line-md);
+  padding:.75rem 2rem .75rem 0;
+  font-family:'Noto Serif TC',serif;font-size:.95rem;
+  color:var(--black);outline:none;
+  -webkit-appearance:none;border-radius:0;cursor:pointer}
+.color-select-arrow{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  color:var(--g50);pointer-events:none}
+.color-preview{
+  height:5px;margin-top:.55rem;overflow:hidden}
+.color-preview-inner{
+  height:100%;width:100%;transition:background .35s ease}
+.color-badge{
+  display:flex;align-items:center;gap:.7rem;
+  margin-top:.65rem;padding:.55rem .8rem;
+  background:var(--off);border:1px solid var(--line);
+  min-height:38px}
+.color-swatch{
+  width:20px;height:20px;flex-shrink:0;border-radius:50%;
+  transition:background .3s;border:1px solid rgba(0,0,0,.08)}
+.color-badge-text{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  color:var(--g70);letter-spacing:.05em;line-height:1.5}
+
+/* PROCESSING */
+#s3{background:var(--white);justify-content:center;align-items:center}
+.proc-inner{text-align:center;padding:2rem;width:100%}
+.proc-ring{width:72px;height:72px;border:1px solid var(--g20);border-top-color:var(--black);
+  border-radius:50%;margin:0 auto 2.5rem;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.proc-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;margin-bottom:.4rem}
+.proc-subtitle{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;
+  color:var(--g50);text-transform:uppercase;margin-bottom:2.5rem}
+.proc-steps{list-style:none;text-align:left;display:inline-block;min-width:240px}
+.proc-step{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--g20);
+  letter-spacing:.04em;padding:.32rem 0;display:flex;align-items:center;gap:.75rem;transition:color .3s}
+.proc-step.done{color:var(--g50)}
+.proc-step.active{color:var(--black)}
+.proc-step.active .proc-num{color:var(--white);background:var(--black);border-color:var(--black)}
+.proc-step.done .proc-num{color:var(--g50);border-color:var(--g20)}
+.proc-num{font-size:.5rem;width:18px;height:18px;border:1px solid var(--g10);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;color:var(--g20)}
+.proc-bar{width:180px;height:1px;background:var(--g10);margin:2rem auto 0;overflow:hidden}
+.proc-fill{height:100%;background:var(--black);width:0;transition:width .3s}
+
+/* RESULTS */
+.results-header{background:var(--black);padding:2rem 1.5rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.result-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;
+  color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:.75rem}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;
+  line-height:1;color:var(--white);margin-bottom:.65rem}
+.result-title em{font-style:italic;color:rgba(255,255,255,.5)}
+.result-concept{font-size:.88rem;color:rgba(255,255,255,.72);line-height:1.9;font-weight:300}
+.tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.85rem}
+.tag{font-family:'DM Mono',monospace;font-size:.6rem;padding:.22rem .65rem;
+  border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.6);letter-spacing:.04em}
+
+.tabs{display:flex;border-bottom:1px solid var(--line);background:var(--white);
+  position:sticky;top:0;z-index:50}
+.tab{flex:1;padding:.95rem .5rem;font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:.1em;text-transform:uppercase;text-align:center;cursor:pointer;
+  color:var(--g50);border-bottom:1px solid transparent;transition:all .2s;
+  background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--black);border-bottom-color:var(--black)}
+.tab-content{display:none;padding:1.5rem 1.5rem 7rem}
+.tab-content.active{display:block}
+
+/* ═══════════════════════════════════════════
+   3D SIMULATION COMPONENTS
+═══════════════════════════════════════════ */
+
+/* Mode toggle */
+.mode-toggle{display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--line-md);margin-bottom:1rem;overflow:hidden}
+.mode-btn{padding:.75rem .5rem;text-align:center;font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  background:var(--white);border:none;color:var(--g50);transition:all .15s;
+  border-right:1px solid var(--line-md)}
+.mode-btn:last-child{border-right:none}
+.mode-btn.active{background:var(--black);color:var(--white)}
+
+/* Simulation viewport */
+.sim-wrap{position:relative;width:100%;aspect-ratio:4/3;
+  background:var(--off);overflow:hidden;
+  border:1px solid var(--line);margin-bottom:1rem}
+#simPhoto{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:none}
+#simVideo{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:none}
+#simPlaceholder{position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:.75rem;
+  background-image:linear-gradient(rgba(10,10,10,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(10,10,10,.04) 1px,transparent 1px);
+  background-size:28px 28px}
+.placeholder-label{font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--g50)}
+.placeholder-icon{font-size:2.2rem;opacity:.35}
+#simCanvas{position:absolute;inset:0;width:100% !important;
+  height:100% !important;pointer-events:none}
+
+/* Sim bottom badge */
+.sim-badge{position:absolute;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(6px);
+  border-top:1px solid var(--line);padding:.55rem 1rem;
+  display:flex;align-items:center;justify-content:space-between}
+.sim-badge-text{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--g80)}
+.sim-badge-tag{font-family:'DM Mono',monospace;font-size:.58rem;
+  color:var(--g50);border:1px solid var(--g20);padding:.15rem .5rem;letter-spacing:.08em}
+
+/* Upload / camera action */
+.sim-action{display:flex;gap:.6rem;margin-bottom:1rem}
+.sim-action-btn{flex:1;padding:.7rem .5rem;font-family:'DM Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line-md);background:var(--off);color:var(--g70);
+  cursor:pointer;text-align:center;transition:all .15s;display:flex;
+  align-items:center;justify-content:center;gap:.4rem}
+.sim-action-btn:active{background:var(--black);color:var(--white);border-color:var(--black)}
+.sim-action-btn.primary{background:var(--black);color:var(--white);border-color:var(--black)}
+.sim-action-btn.primary:active{background:var(--g70)}
+
+/* Season row */
+.season-row{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1rem}
+.season-btn{padding:.65rem .3rem;text-align:center;background:var(--white);
+  border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:.62rem;
+  color:var(--g70);transition:background .15s;letter-spacing:.04em}
+.season-btn.active{background:var(--black);color:var(--white)}
+
+/* Layer toggles */
+.layer-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem}
+.layer-btn{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;
+  padding:.38rem .8rem;border:1px solid var(--black);
+  background:var(--black);color:var(--white);
+  cursor:pointer;transition:all .15s;text-transform:uppercase}
+.layer-btn.off{background:var(--white);color:var(--g50);border-color:var(--g20)}
+
+/* View angle */
+.angle-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.angle-label{font-family:'DM Mono',monospace;font-size:.62rem;
+  color:var(--g70);white-space:nowrap;min-width:60px}
+.angle-slider{flex:1;-webkit-appearance:none;appearance:none;
+  height:1px;background:var(--g20);outline:none;cursor:pointer}
+.angle-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
+  background:var(--black);cursor:pointer}
+.angle-val{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--g50);
+  min-width:28px;text-align:right}
+
+/* Legend */
+.legend{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.5rem}
+.legend-item{display:flex;align-items:center;gap:.4rem}
+.legend-dot{width:10px;height:10px;flex-shrink:0}
+.legend-text{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--g70)}
+
+/* Note box */
+.note-box{border:1px solid var(--g10);padding:.9rem 1rem;font-size:.82rem;
+  line-height:1.8;color:var(--g80);margin-bottom:1.5rem;background:var(--off)}
+.note-box strong{font-weight:500;color:var(--black)}
+
+/* AR note */
+.ar-note{background:var(--black);color:rgba(255,255,255,.65);
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.05em;
+  line-height:1.7;padding:.75rem 1rem;margin-bottom:1rem;
+  border-left:2px solid rgba(255,255,255,.2)}
+
+/* Season cards */
+.season-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:1.5rem}
+.season-item{background:var(--white);padding:1rem .85rem;text-align:center}
+.season-item.active{background:var(--off)}
+.season-icon{font-size:1.3rem;margin-bottom:.4rem}
+.season-name{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.08em;
+  color:var(--g70);text-transform:uppercase;margin-bottom:.3rem}
+.season-desc{font-size:.78rem;color:var(--g80);line-height:1.6}
+
+/* Layer diagram */
+.layer-diagram{border:1px solid var(--line);margin-bottom:1.5rem;overflow:hidden}
+.layer-row2{display:flex;align-items:stretch;border-bottom:1px solid var(--line)}
+.layer-row2:last-child{border-bottom:none}
+.layer-bar{width:3px;flex-shrink:0}
+.layer-content{padding:.85rem 1rem;flex:1}
+.layer-role{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g50);margin-bottom:.25rem}
+.layer-plant{font-size:.92rem;color:var(--black);font-weight:500}
+.layer-note{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--g70);margin-top:.2rem}
+
+/* Plant cards */
+.plant-card{border:1px solid var(--line);margin-bottom:.75rem;overflow:hidden}
+.plant-header{display:flex;align-items:flex-start;gap:1rem;
+  padding:1rem 1rem .85rem;border-bottom:1px solid var(--line)}
+.plant-index{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--g50);
+  padding-top:.1rem;flex-shrink:0;min-width:16px}
+.plant-info{flex:1}
+.plant-name-zh{font-size:1.05rem;font-weight:500;letter-spacing:.02em;color:var(--black)}
+.plant-name-sci{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--g50);
+  font-style:italic;margin-top:.2rem}
+.plant-role-tag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;
+  border:1px solid var(--g20);padding:.22rem .6rem;color:var(--g70);
+  text-transform:uppercase;flex-shrink:0;margin-top:.1rem}
+.plant-role-tag.thriller{border-color:var(--black);color:var(--black)}
+.plant-details{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.plant-detail-item{padding:.75rem .85rem;text-align:center;border-right:1px solid var(--line)}
+.plant-detail-item:last-child{border-right:none}
+.plant-detail-val{font-family:'DM Mono',monospace;font-size:.85rem;color:var(--black);
+  font-weight:500;display:block}
+.plant-detail-key{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50);
+  margin-top:.25rem;text-transform:uppercase;letter-spacing:.06em}
+.plant-rationale{padding:.9rem 1rem;font-size:.82rem;color:var(--g80);line-height:1.8;background:var(--off)}
+
+/* Budget */
+.budget-block{border:1px solid var(--black);padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
+.budget-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g50);margin-bottom:.5rem}
+.budget-total{font-family:'DM Mono',monospace;font-size:2.4rem;color:var(--black);
+  letter-spacing:-.02em;font-weight:500}
+.budget-total small{font-size:1rem;font-weight:300}
+.budget-lines{margin-top:1rem;border-top:1px solid var(--line);padding-top:.85rem}
+.budget-line{display:flex;justify-content:space-between;padding:.32rem 0;
+  font-family:'DM Mono',monospace;font-size:.7rem;color:var(--g70);
+  border-bottom:1px solid var(--line)}
+.budget-line:last-child{border-bottom:none}
+.budget-line-val{color:var(--black);font-weight:500}
+
+/* Quote */
+.quote-meta-block{border-bottom:1px solid var(--line);padding-bottom:1.25rem;margin-bottom:1.25rem}
+.quote-doc-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;
+  margin-bottom:.75rem;color:var(--black)}
+.quote-meta-grid{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;
+  font-family:'DM Mono',monospace;font-size:.65rem}
+.qmk{color:var(--g50);text-transform:uppercase;letter-spacing:.06em}
+.qmv{color:var(--black);font-weight:500}
+.quote-table{width:100%;border-collapse:collapse;margin-bottom:1.25rem}
+.quote-table th{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g70);border-bottom:1px solid var(--line-md);
+  padding:.55rem .3rem;text-align:left;font-weight:400}
+.quote-table td{font-size:.82rem;padding:.6rem .3rem;border-bottom:1px solid var(--line);
+  vertical-align:top;color:var(--black)}
+.qtmono{font-family:'DM Mono',monospace;font-size:.75rem}
+.quote-subtotal td{background:var(--off);font-family:'DM Mono',monospace;
+  font-size:.68rem;color:var(--g70)}
+.quote-total td{border-top:1px solid var(--black)!important;border-bottom:none!important;
+  font-family:'DM Mono',monospace;font-size:.88rem;color:var(--black);
+  font-weight:500;padding-top:.9rem}
+.quote-notes{border:1px solid var(--line);padding:1rem;font-family:'DM Mono',monospace;
+  font-size:.68rem;line-height:2;color:var(--g70);margin-bottom:1rem}
+.quote-footer{text-align:center;padding:1.25rem;font-family:'DM Mono',monospace;
+  font-size:.65rem;color:var(--g50);letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line);line-height:1.9}
+
+/* CTA */
+.cta-wrap{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:linear-gradient(to top,var(--white) 65%,transparent);
+  padding:1.5rem 1.5rem 1.75rem;z-index:200}
+.cta-btn{width:100%;padding:1rem;background:var(--black);color:var(--white);
+  border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:.72rem;
+  letter-spacing:.15em;text-transform:uppercase;transition:background .2s;
+  display:flex;align-items:center;justify-content:center;gap:.75rem}
+.cta-btn:active{background:var(--g70)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ S0 · SPLASH ═══════════ -->
+<div id="s0" class="screen active">
+  <div class="splash-grid"></div>
+  <div class="splash-top">
+    <div class="splash-eyebrow">Taiwan Central · Native Planting · Prototype</div>
+    <div class="splash-title">草<em>徑</em></div>
+    <div class="splash-tagline">
+      以台灣中部原生植物為材料<br>
+      循 Piet Oudolf 自然種植哲學<br>
+      為都市陽台創造有生命的景觀
+    </div>
+  </div>
+  <div class="splash-bottom">
+    <div class="splash-meta">Balcony · Urban · v0.1<br>3D Simulation Mode</div>
+    <button class="splash-btn" onclick="goTo('s1')">開始 →</button>
+  </div>
+</div>
+
+<!-- ═══════════ S1 · SITE INPUT ═══════════ -->
+<div id="s1" class="screen">
+  <div class="topnav">
+    <button class="topnav-back" onclick="goTo('s0')">← Back</button>
+    <span class="topnav-title">Site Conditions</span>
+    <span class="topnav-step">01 / 04</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+  <div class="screen-body">
+    <div class="data-status"><div class="data-dot"></div>Mock Data Mode · 植物資料庫補充中</div>
+    <div class="section-label">場地條件</div>
+    <div class="page-heading">陽台<em>現況</em></div>
+    <div class="page-subtext">微氣候條件將決定植物選擇。不確定的欄位可略過。</div>
+    <div class="form-group">
+      <label class="form-label">Location · 地點</label>
+      <input type="text" class="form-input" placeholder="台中市西區、南投縣埔里鎮…" value="台中市北區">
+    </div>
+    <div class="input-row">
+      <div class="form-group">
+        <label class="form-label">Area · 面積</label>
+        <select class="form-select" id="areaSelect">
+          <option>小型 &lt;5㎡</option><option selected>中型 5–10㎡</option><option>大型 &gt;10㎡</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Orientation · 朝向</label>
+        <select class="form-select">
+          <option>東向</option><option selected>南向</option><option>西向</option><option>北向</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sunlight · 日照</label>
+      <div class="chips">
+        <span class="chip" data-light="full" onclick="this.classList.toggle('selected')">全日照 6h+</span>
+        <span class="chip selected" data-light="partial" onclick="this.classList.toggle('selected')">半日照 3–6h</span>
+        <span class="chip" data-light="shade" onclick="this.classList.toggle('selected')">遮陰 &lt;3h</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Floor Level · 樓層</label>
+      <div class="chips">
+        <span class="chip" onclick="this.classList.toggle('selected')">低層 1–5F</span>
+        <span class="chip selected" onclick="this.classList.toggle('selected')">中層 6–12F</span>
+        <span class="chip" onclick="this.classList.toggle('selected')">高層 13F+</span>
+        <span class="chip" onclick="this.classList.toggle('selected')">強風環境</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Maintenance · 維護習慣</label>
+      <div class="chips">
+        <span class="chip" data-moist="wet" onclick="this.classList.toggle('selected')">每日澆水</span>
+        <span class="chip selected" data-moist="mesic" onclick="this.classList.toggle('selected')">2–3天一次</span>
+        <span class="chip" data-moist="dry" onclick="this.classList.toggle('selected')">低維護優先</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Budget · 預算 (NTD)</label>
+      <select class="form-select">
+        <option>3,000 – 5,000</option><option selected>5,000 – 10,000</option>
+        <option>10,000 – 20,000</option><option>20,000+</option>
+      </select>
+    </div>
+  </div>
+  <div class="cta-wrap"><button class="cta-btn" onclick="goTo('s2')">下一步：美學偏好 →</button></div>
+</div>
+
+<!-- ═══════════ S2 · AESTHETIC ═══════════ -->
+<div id="s2" class="screen">
+  <div class="topnav">
+    <button class="topnav-back" onclick="goTo('s1')">← Back</button>
+    <span class="topnav-title">Aesthetic Preference</span>
+    <span class="topnav-step">02 / 04</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+  <div class="screen-body">
+    <div class="section-label">美學風格</div>
+    <div class="page-heading">植物<em>氛圍</em></div>
+    <div class="page-subtext">選擇最接近的視覺感受，AI 將對應 Oudolf 設計屬性。可多選。</div>
+    <div class="style-grid">
+      <div class="style-card selected" data-style="airy" onclick="this.classList.toggle('selected')">
+        <div class="style-card-img sb1"><span>🌾</span></div>
+        <div class="style-check">✓</div>
+        <div class="style-card-body"><div class="style-card-name">輕盈自然</div><div class="style-card-desc">禾草搖曳<br>通透飄動</div></div>
+      </div>
+      <div class="style-card" data-style="floral" onclick="this.classList.toggle('selected')">
+        <div class="style-card-img sb2"><span>🌺</span></div>
+        <div class="style-check">✓</div>
+        <div class="style-card-body"><div class="style-card-name">豐盛花海</div><div class="style-card-desc">色彩豐富<br>接力盛開</div></div>
+      </div>
+      <div class="style-card" data-style="zen" onclick="this.classList.toggle('selected')">
+        <div class="style-card-img sb3"><span>🍃</span></div>
+        <div class="style-check">✓</div>
+        <div class="style-card-body"><div class="style-card-name">禪意靜謐</div><div class="style-card-desc">蕨類地被<br>低色彩層次</div></div>
+      </div>
+      <div class="style-card" data-style="wild" onclick="this.classList.toggle('selected')">
+        <div class="style-card-img sb4"><span>🌿</span></div>
+        <div class="style-check">✓</div>
+        <div class="style-card-body"><div class="style-card-name">生態原野</div><div class="style-card-desc">自然群落<br>吸引生物</div></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-label">整體主色調</div>
+    <div class="form-group">
+      <label class="form-label">Color Tone · 花色偏好</label>
+      <div class="color-select-wrap">
+        <select class="color-select" id="colorToneSelect" onchange="onColorToneChange(this)">
+          <optgroup label="── 冷色調 Cool">
+            <option value="blue"   >冷色調 · 藍色調　Blue</option>
+            <option value="pink"   >冷色調 · 粉紅色調　Pink</option>
+            <option value="purple" >冷色調 · 紫色調　Purple</option>
+          </optgroup>
+          <optgroup label="── 暖色調 Warm">
+            <option value="yellow" >暖色調 · 黃色調　Yellow</option>
+            <option value="green"  >暖色調 · 綠色調　Green</option>
+            <option value="orange" >暖色調 · 橘色調　Orange</option>
+            <option value="brown"  >暖色調 · 咖啡色調　Brown</option>
+          </optgroup>
+          <optgroup label="── 其他色調 Neutral">
+            <option value="grey"   >其他 · 灰色調　Grey</option>
+            <option value="white"  >其他 · 白色調　White</option>
+          </optgroup>
+        </select>
+        <span class="color-select-arrow">▾</span>
+      </div>
+      <div class="color-preview"><div class="color-preview-inner" id="colorPreviewBar"></div></div>
+      <div class="color-badge" id="colorBadge">
+        <div class="color-swatch" id="colorSwatch"></div>
+        <div class="color-badge-text" id="colorBadgeText">請選擇主色調偏好</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">自然語言描述</div>
+    <div class="form-group">
+      <label class="form-label">Describe in your own words</label>
+      <textarea class="form-textarea" placeholder="例：有野生感，秋天有枯穗的美感…">我想要輕盈飄動的感覺，秋天有金色枯穗，不太需要修剪。</textarea>
+    </div>
+    <div class="divider"></div>
+    <div class="section-label">微氣候細節</div>
+    <div class="climate-grid">
+      <div class="climate-item selected" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">🌡️</div><div class="climate-label">夏季悶熱<br>需耐熱</div>
+      </div>
+      <div class="climate-item" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">💧</div><div class="climate-label">排水<br>良好</div>
+      </div>
+      <div class="climate-item selected" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">🌬️</div><div class="climate-label">東北季風<br>強勁</div>
+      </div>
+      <div class="climate-item" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">🏙️</div><div class="climate-label">都市熱島<br>效應</div>
+      </div>
+      <div class="climate-item" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">🌧️</div><div class="climate-label">梅雨季<br>積水</div>
+      </div>
+      <div class="climate-item selected" onclick="this.classList.toggle('selected')">
+        <div class="climate-icon">☀️</div><div class="climate-label">午後西曬<br>強烈</div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-wrap"><button class="cta-btn" onclick="startProcessing()">生成植栽建議 →</button></div>
+</div>
+
+<!-- ═══════════ S3 · PROCESSING ═══════════ -->
+<div id="s3" class="screen">
+  <div class="proc-inner">
+    <div class="proc-ring"></div>
+    <div class="proc-title">分析中</div>
+    <div class="proc-subtitle">Plant Recommendation Engine</div>
+    <ul class="proc-steps">
+      <li class="proc-step" id="ps1"><span class="proc-num">01</span>解析場地微氣候條件</li>
+      <li class="proc-step" id="ps2"><span class="proc-num">02</span>比對美學語言偏好</li>
+      <li class="proc-step" id="ps3"><span class="proc-num">03</span>檢索中部原生植物資料庫</li>
+      <li class="proc-step" id="ps4"><span class="proc-num">04</span>套用 Oudolf 三層結構</li>
+      <li class="proc-step" id="ps5"><span class="proc-num">05</span>驗證生態相容性</li>
+      <li class="proc-step" id="ps6"><span class="proc-num">06</span>爬取市場價格資料</li>
+      <li class="proc-step" id="ps7"><span class="proc-num">07</span>建立 3D 植栽場景</li>
+    </ul>
+    <div class="proc-bar"><div class="proc-fill" id="procFill"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════ S4 · RESULTS ═══════════ -->
+<div id="s4" class="screen" style="flex-direction:column">
+  <div class="results-header">
+    <div class="result-label">Design Proposal · 設計建議</div>
+    <div class="result-title">輕盈原野<br><em>Airy Prairie</em></div>
+    <div class="result-concept">以台灣中部原生禾草為基底矩陣，搭配多年生草本接力開放，呈現 Oudolf 自然群落的動態美感。四季皆有觀賞焦點。</div>
+    <div class="tag-row">
+      <span class="tag">Oudolf Matrix</span><span class="tag">四季表現</span>
+      <span class="tag">低維護</span><span class="tag">耐熱耐風</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('t1',this);onSimTabOpen()">3D 模擬</button>
+    <button class="tab" onclick="switchTab('t2',this)">植栽清單</button>
+    <button class="tab" onclick="switchTab('t3',this)">報價單</button>
+  </div>
+
+  <!-- ═══ TAB 1: 3D SIMULATION ═══ -->
+  <div id="t1" class="tab-content active">
+
+    <!-- Mode toggle -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="photo" onclick="setSimMode('photo')">
+        📷 相片模擬
+      </button>
+      <button class="mode-btn" data-mode="ar" onclick="setSimMode('ar')">
+        📹 實景 AR
+      </button>
+    </div>
+
+    <!-- Simulation viewport -->
+    <div class="sim-wrap" id="simWrap">
+      <img id="simPhoto" alt="場地相片">
+      <video id="simVideo" autoplay playsinline muted></video>
+      <div id="simPlaceholder">
+        <span class="placeholder-icon">🏗</span>
+        <span class="placeholder-label">上傳現場相片<br>或啟動相機</span>
+      </div>
+      <canvas id="simCanvas"></canvas>
+      <div class="sim-badge">
+        <span class="sim-badge-text" id="simBadgeText">台中市北區 · 南向 · 7㎡</span>
+        <span class="sim-badge-tag" id="simBadgeTag">3D READY</span>
+      </div>
+    </div>
+
+    <!-- Upload / camera -->
+    <div class="sim-action" id="photoActions">
+      <label class="sim-action-btn primary" style="cursor:pointer">
+        ↑ 上傳現場相片
+        <input type="file" accept="image/*" id="photoInput" style="display:none" onchange="handlePhotoUpload(event)">
+      </label>
+      <button class="sim-action-btn" onclick="resetPhoto()">重置</button>
+    </div>
+    <div class="sim-action" id="arActions" style="display:none">
+      <button class="sim-action-btn primary" id="camBtn" onclick="toggleCamera()">▶ 啟動相機</button>
+      <button class="sim-action-btn" onclick="setSimMode('photo')">← 返回相片</button>
+    </div>
+
+    <!-- AR explanation -->
+    <div class="ar-note" id="arNote" style="display:none">
+      實景 AR 模式：植栽 3D 模型即時疊加於相機畫面。<br>
+      使用視角調整滑桿配合現場地面視角。<br>
+      正式版將整合 WebXR 平面偵測。
+    </div>
+
+    <!-- Season toggle -->
+    <div class="section-label">季節模擬</div>
+    <div class="season-row">
+      <button class="season-btn" data-season="spring" onclick="setSeason('spring')">春 Spring</button>
+      <button class="season-btn active" data-season="summer" onclick="setSeason('summer')">夏 Summer</button>
+      <button class="season-btn" data-season="autumn" onclick="setSeason('autumn')">秋 Autumn</button>
+      <button class="season-btn" data-season="winter" onclick="setSeason('winter')">冬 Winter</button>
+    </div>
+
+    <!-- Layer toggles -->
+    <div class="section-label">圖層顯示</div>
+    <div class="layer-row">
+      <button class="layer-btn" id="lb_thriller" onclick="toggleLayer('thriller')">Thriller</button>
+      <button class="layer-btn" id="lb_filler"   onclick="toggleLayer('filler')">Filler</button>
+      <button class="layer-btn" id="lb_spiller"  onclick="toggleLayer('spiller')">Spiller</button>
+      <button class="layer-btn" id="lb_matrix"   onclick="toggleLayer('matrix')">Matrix</button>
+    </div>
+
+    <!-- View angle -->
+    <div class="section-label">視角調整</div>
+    <div class="angle-row">
+      <span class="angle-label">仰角</span>
+      <input type="range" class="angle-slider" id="angleSlider"
+        min="5" max="50" value="22" oninput="updateAngle(this.value)">
+      <span class="angle-val" id="angleVal">22°</span>
+    </div>
+
+    <!-- Legend -->
+    <div class="section-label">圖例</div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#2A3E20"></div>
+        <span class="legend-text">台灣蘆竹 · Thriller</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#4A6A38"></div>
+        <span class="legend-text">台灣馬蘭 · Filler</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#5A7848"></div>
+        <span class="legend-text">台灣澤蘭 · Filler</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#8A9E70"></div>
+        <span class="legend-text">石板菜 · Spiller</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#6A8050"></div>
+        <span class="legend-text">台灣莎草 · Matrix</span>
+      </div>
+    </div>
+
+    <!-- Oudolf layer diagram -->
+    <div class="section-label">Oudolf 種植分布法</div>
+    <div class="layer-diagram">
+      <div class="layer-row2">
+        <div class="layer-bar" style="background:#2A3E20"></div>
+        <div class="layer-content">
+          <div class="layer-role">Thriller · 焦點植物</div>
+          <div class="layer-plant">台灣蘆竹</div>
+          <div class="layer-note">80–120cm · 垂直錨點 · 高透明度穗型</div>
+        </div>
+      </div>
+      <div class="layer-row2">
+        <div class="layer-bar" style="background:#4A6A38"></div>
+        <div class="layer-content">
+          <div class="layer-role">Filler · 填充植物 (Naturalistic Drift)</div>
+          <div class="layer-plant">台灣馬蘭 · 台灣澤蘭</div>
+          <div class="layer-note">40–60cm · 不規則漂移群落 · 接力花期</div>
+        </div>
+      </div>
+      <div class="layer-row2">
+        <div class="layer-bar" style="background:#8A9E70"></div>
+        <div class="layer-content">
+          <div class="layer-role">Spiller · 溢出植物</div>
+          <div class="layer-plant">石板菜</div>
+          <div class="layer-note">5–15cm · 前緣溢垂 · 容器邊緣</div>
+        </div>
+      </div>
+      <div class="layer-row2">
+        <div class="layer-bar" style="background:#6A8050"></div>
+        <div class="layer-content">
+          <div class="layer-role">Matrix · 基底矩陣</div>
+          <div class="layer-plant">台灣莎草</div>
+          <div class="layer-note">30–50cm · 背景填充 · 全年紋理</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end t1 -->
+
+  <!-- ═══ TAB 2: PLANT LIST ═══ -->
+  <div id="t2" class="tab-content">
+    <div class="note-box">
+      <strong>資料庫狀態</strong>：植物清單為 Mock Data。正式版將自動爬取農委會農糧署、台中花卉批發市場、苗圃官網最新零售價。
+    </div>
+    <div class="plant-card">
+      <div class="plant-header">
+        <div class="plant-index">01</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">台灣蘆竹</div>
+          <div class="plant-name-sci">Arundo formosana Hack.</div>
+        </div>
+        <div class="plant-role-tag thriller">Thriller</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">80–120</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$180</span><div class="plant-detail-key">苗圃估價</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× 2</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">台灣特有種禾草，對應 Oudolf 系統中 <em>Stipa gigantea</em> 的透明高莖角色。耐熱、耐強風、低維護。秋季穗型具極佳冬季骨架美感，符合「四季表現」設計原則。</div>
+    </div>
+    <div class="plant-card">
+      <div class="plant-header">
+        <div class="plant-index">02</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">台灣馬蘭</div>
+          <div class="plant-name-sci">Aster taiwanensis Kitam.</div>
+        </div>
+        <div class="plant-role-tag">Filler</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">40–60</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$120</span><div class="plant-detail-key">農委會參考</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× 3</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">秋季盛開淡紫色小花，呈霧狀輕盈花海。對應 Oudolf 體系 <em>Aster amellus</em> 角色。半日照適應佳，符合南向陽台午後遮陰條件。</div>
+    </div>
+    <div class="plant-card">
+      <div class="plant-header">
+        <div class="plant-index">03</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">台灣澤蘭</div>
+          <div class="plant-name-sci">Eupatorium formosanum Hayata</div>
+        </div>
+        <div class="plant-role-tag">Filler</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">50–80</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$150</span><div class="plant-detail-key">苗圃估價</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× 2</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">夏末秋初白色聚繖花序，吸引蝴蝶、蜜蜂。與台灣馬蘭形成接力花期，維持夏秋景觀連續性。</div>
+    </div>
+    <div class="plant-card">
+      <div class="plant-header">
+        <div class="plant-index">04</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">石板菜</div>
+          <div class="plant-name-sci">Sedum formosanum N.E.Br.</div>
+        </div>
+        <div class="plant-role-tag">Spiller</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">5–15</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$80</span><div class="plant-detail-key">苗圃估價</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× 4</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">台灣原生景天科地被。耐旱、耐熱、耐強光，春末開黃花。陽台邊緣溢垂，低維護首選。</div>
+    </div>
+    <div class="plant-card">
+      <div class="plant-header">
+        <div class="plant-index">05</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">台灣莎草</div>
+          <div class="plant-name-sci">Cyperus haspan L.</div>
+        </div>
+        <div class="plant-role-tag" style="background:var(--black);color:var(--white);border-color:var(--black)">Matrix</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">30–50</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$90</span><div class="plant-detail-key">農委會參考</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× 3</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">Oudolf Matrix 植物對應。細葉搖曳，高透明度，視覺深度佳。耐潮濕，梅雨季無積水疑慮，全年穩定觀賞效果。</div>
+    </div>
+    <div class="budget-block">
+      <div class="budget-label">植栽材料費估算 · Estimated Cost</div>
+      <div class="budget-total"><small>NT$</small> 4,660</div>
+      <div class="budget-lines">
+        <div class="budget-line"><span>植物材料（14盆）</span><span class="budget-line-val">3,060</span></div>
+        <div class="budget-line"><span>介質、盆器（估算）</span><span class="budget-line-val">1,200</span></div>
+        <div class="budget-line"><span>運費</span><span class="budget-line-val">400</span></div>
+      </div>
+    </div>
+  </div><!-- end t2 -->
+
+  <!-- ═══ TAB 3: QUOTATION ═══ -->
+  <div id="t3" class="tab-content">
+    <div class="quote-meta-block">
+      <div class="quote-doc-title">植栽建議報價單</div>
+      <div class="quote-meta-grid">
+        <span class="qmk">No.</span><span class="qmv">QT-2026-0328</span>
+        <span class="qmk">日期</span><span class="qmv">2026.03.28</span>
+        <span class="qmk">設計</span><span class="qmv">輕盈原野 Airy Prairie</span>
+        <span class="qmk">場地</span><span class="qmv">台中市北區 · 南向 · 7㎡</span>
+      </div>
+    </div>
+    <table class="quote-table">
+      <thead>
+        <tr><th>植物名稱</th><th>角色</th><th style="text-align:right">單價</th><th style="text-align:right">數量</th><th style="text-align:right">小計</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>台灣蘆竹<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">6吋盆</span></td><td class="qtmono" style="color:var(--black);font-size:.6rem">Thriller</td><td class="qtmono" style="text-align:right">180</td><td class="qtmono" style="text-align:right">×2</td><td class="qtmono" style="text-align:right;font-weight:500">360</td></tr>
+        <tr><td>台灣馬蘭<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">4吋盆</span></td><td class="qtmono" style="color:var(--g50);font-size:.6rem">Filler</td><td class="qtmono" style="text-align:right">120</td><td class="qtmono" style="text-align:right">×3</td><td class="qtmono" style="text-align:right;font-weight:500">360</td></tr>
+        <tr><td>台灣澤蘭<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">4吋盆</span></td><td class="qtmono" style="color:var(--g50);font-size:.6rem">Filler</td><td class="qtmono" style="text-align:right">150</td><td class="qtmono" style="text-align:right">×2</td><td class="qtmono" style="text-align:right;font-weight:500">300</td></tr>
+        <tr><td>石板菜<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">3吋盆</span></td><td class="qtmono" style="color:var(--g50);font-size:.6rem">Spiller</td><td class="qtmono" style="text-align:right">80</td><td class="qtmono" style="text-align:right">×4</td><td class="qtmono" style="text-align:right;font-weight:500">320</td></tr>
+        <tr><td>台灣莎草<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">4吋盆</span></td><td class="qtmono" style="color:var(--g50);font-size:.6rem">Matrix</td><td class="qtmono" style="text-align:right">90</td><td class="qtmono" style="text-align:right">×3</td><td class="qtmono" style="text-align:right;font-weight:500">270</td></tr>
+        <tr class="quote-subtotal"><td colspan="4">植物材料小計</td><td class="qtmono" style="text-align:right">1,610</td></tr>
+        <tr class="quote-subtotal"><td colspan="4">介質（栽培土 40L）</td><td class="qtmono" style="text-align:right">600</td></tr>
+        <tr class="quote-subtotal"><td colspan="4">陶盆 ×2 + 纖維盆 ×5</td><td class="qtmono" style="text-align:right">1,050</td></tr>
+        <tr class="quote-subtotal"><td colspan="4">配送費</td><td class="qtmono" style="text-align:right">400</td></tr>
+        <tr class="quote-total"><td colspan="4">Total · 合計</td><td style="text-align:right">NT$ 4,660</td></tr>
+      </tbody>
+    </table>
+    <div class="quote-notes">
+      01 — 植物單價參考：農委會農糧署、台中苗圃市場估算（2026.Q1）<br>
+      02 — 正式版將自動爬取最新苗圃報價：農委會農糧署、台中花卉批發市場、東勢苗圃等<br>
+      03 — AI 輔助估算，實際採購金額可能有 ±15% 差異<br>
+      04 — 不含設計服務費、安裝施工費
+    </div>
+    <div class="quote-footer">草徑 Cǎojìng · AI-Assisted Native Plant Design<br>Taiwan Central · Oudolf Method Adapted · Prototype v0.1</div>
+  </div><!-- end t3 -->
+
+</div><!-- end s4 -->
+
+<!-- Three.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ============================================================
+   APP NAVIGATION
+============================================================ */
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function startProcessing() {
+  const inputs = collectInputs();
+  goTo('s3');
+  const ids = ['ps1','ps2','ps3','ps4','ps5','ps6','ps7'];
+  const dur = [550,650,750,600,500,800,950];
+  let cum = 0;
+  ids.forEach((id,i) => {
+    setTimeout(() => document.getElementById(id).classList.add('active'), cum);
+    setTimeout(() => {
+      document.getElementById(id).classList.remove('active');
+      document.getElementById(id).classList.add('done');
+      document.getElementById('procFill').style.width = Math.round(((i+1)/ids.length)*100)+'%';
+    }, cum+dur[i]-80);
+    cum += dur[i];
+  });
+  loadPlants().then(plants => {
+    const filtered = filterPlants(plants, inputs);
+    const palette = selectPalette(filtered.length > 0 ? filtered : plants, inputs.styles);
+    setTimeout(() => { renderResults(palette, inputs); goTo('s4'); onSimTabOpen(); }, cum+350);
+  }).catch(() => {
+    const filtered = filterPlants(FALLBACK_PLANTS, inputs);
+    const palette = selectPalette(filtered.length > 0 ? filtered : FALLBACK_PLANTS, inputs.styles);
+    setTimeout(() => { renderResults(palette, inputs); goTo('s4'); onSimTabOpen(); }, cum+350);
+  });
+}
+
+/* ============================================================
+   PLANT DATA & FILTERING ENGINE
+============================================================ */
+let PLANTS_CACHE = null;
+
+const POT_PRICE = { '3吋':60, '4吋':100, '5吋':150, '1加侖':220 };
+const AREA_M2_MAP = { '小型 <5㎡':3, '中型 5–10㎡':7, '大型 >10㎡':12 };
+const AREA_FACTOR_MAP = { '小型 <5㎡':0.6, '中型 5–10㎡':1.0, '大型 >10㎡':1.7 };
+const BASE_QTY = { matrix:5, primary:3, scatter:2, filler:3 };
+const ROLE_LABEL_ZH = { matrix:'Matrix · 基底', primary:'Primary · 主角', scatter:'Scatter · 散布', filler:'Filler · 填充' };
+const ROLE_LABEL_EN = { matrix:'Matrix', primary:'Thriller', scatter:'Spiller', filler:'Filler' };
+const ARCH_ZH = { transparent:'透明型', upright:'直立型', leafy_mound:'叢生型', emergent:'突現型' };
+const ROLE_COLOR = { matrix:'#6A8050', primary:'#2A3E20', scatter:'#8A9E70', filler:'#4A6A38' };
+const LEGEND_COLORS = ['#2A3E20','#4A6A38','#5A7848','#8A9E70','#6A8050','#3E5A28'];
+
+async function loadPlants() {
+  if (PLANTS_CACHE) return PLANTS_CACHE;
+  const r = await fetch('plants-mock.json');
+  PLANTS_CACHE = await r.json();
+  return PLANTS_CACHE;
+}
+
+function collectInputs() {
+  const lights = [...document.querySelectorAll('[data-light].selected')].map(c => c.dataset.light);
+  const moists = [...document.querySelectorAll('[data-moist].selected')].map(c => c.dataset.moist);
+  const styles = [...document.querySelectorAll('[data-style].selected')].map(c => c.dataset.style);
+  const areaEl = document.getElementById('areaSelect');
+  const areaKey = areaEl ? areaEl.value : '中型 5–10㎡';
+  return {
+    lights: lights.length ? lights : ['full','partial','shade'],
+    moists: moists.length ? moists : ['dry','mesic','wet'],
+    styles,
+    areaKey,
+    areaFactor: AREA_FACTOR_MAP[areaKey] || 1.0
+  };
+}
+
+function filterPlants(plants, inputs) {
+  return plants.filter(p =>
+    inputs.lights.some(l => p.site.light.includes(l)) &&
+    inputs.moists.some(m => p.site.moisture.includes(m))
+  );
+}
+
+function selectPalette(filtered, styles) {
+  let preferredArch = [];
+  if (styles.includes('airy')) preferredArch.push('transparent');
+  if (styles.includes('floral')) preferredArch.push('upright','emergent');
+  if (styles.includes('zen')) preferredArch.push('leafy_mound');
+  if (styles.includes('wild')) preferredArch.push('transparent','upright','emergent');
+  if (!preferredArch.length) preferredArch = ['transparent','upright','leafy_mound','emergent'];
+
+  function pick(role, n) {
+    const pool = filtered.filter(p => p.role === role);
+    if (!pool.length) return [];
+    const preferred = pool.filter(p => preferredArch.includes(p.architecture));
+    const src = preferred.length ? preferred : pool;
+    return [...src].sort((a,b) => (b.piet_similarity||0)-(a.piet_similarity||0)).slice(0,n)
+      .map(p => ({...p, _role: role}));
+  }
+
+  const palette = [
+    ...pick('matrix', 1),
+    ...pick('primary', 2),
+    ...pick('scatter', 1),
+    ...pick('filler', 1)
+  ];
+  if (!palette.length) {
+    return [...filtered].sort((a,b)=>(b.piet_similarity||0)-(a.piet_similarity||0))
+      .slice(0,5).map(p=>({...p, _role: p.role||'filler'}));
+  }
+  return palette;
+}
+
+function calcQty(plant, areaFactor) {
+  return Math.max(1, Math.round((BASE_QTY[plant._role] || 2) * areaFactor));
+}
+function calcPrice(plant) {
+  const pot = plant.pot_sizes && plant.pot_sizes[0] || '4吋';
+  return POT_PRICE[pot] || 100;
+}
+
+function renderResults(palette, inputs) {
+  _renderHeader(palette, inputs);
+  _renderTab2(palette, inputs);
+  _renderTab3(palette, inputs);
+  _renderLegend(palette);
+  _renderLayerDiag(palette);
+}
+
+function _renderHeader(palette, inputs) {
+  const labels = { airy:'輕盈自然', floral:'豐盛花海', zen:'禪意靜謐', wild:'生態原野' };
+  const name = inputs.styles.length ? inputs.styles.map(s=>labels[s]||s).join('・') : '自然群落';
+  document.querySelector('.result-title').innerHTML = name+'<br><em>Native Prairie</em>';
+  const tags = ['台灣原生','Oudolf 方法'];
+  if (inputs.moists.includes('dry')) tags.push('低維護');
+  if (inputs.lights.includes('full')) tags.push('全日照');
+  if (inputs.lights.includes('shade')) tags.push('耐陰性');
+  document.querySelector('.tag-row').innerHTML = tags.map(t=>`<span class="tag">${t}</span>`).join('');
+}
+
+function _renderTab2(palette, inputs) {
+  const t2 = document.getElementById('t2');
+  t2.querySelectorAll('.plant-card,.budget-block').forEach(el=>el.remove());
+  let totalPlant = 0;
+  palette.forEach((plant, i) => {
+    const qty = calcQty(plant, inputs.areaFactor);
+    const price = calcPrice(plant);
+    totalPlant += qty * price;
+    const pot = plant.pot_sizes && plant.pot_sizes[0] || '4吋';
+    const hStr = plant.height_cm ? plant.height_cm[0]+'-'+plant.height_cm[1] : '—';
+    const roleEn = ROLE_LABEL_EN[plant._role] || plant._role;
+    const isMatrix = plant._role === 'matrix';
+    const tagHtml = (plant.match_tags||[]).slice(0,3).map(t=>`<span class="tag">${t}</span>`).join('');
+    const autumnDesc = plant.seasons ? (plant.seasons.autumn||plant.seasons.summer||'') : '';
+    const card = document.createElement('div');
+    card.className = 'plant-card';
+    card.innerHTML = `
+      <div class="plant-header">
+        <div class="plant-index">0${i+1}</div>
+        <div class="plant-info">
+          <div class="plant-name-zh">${plant.name_zh}</div>
+          <div class="plant-name-sci">${plant.name_latin}</div>
+        </div>
+        <div class="plant-role-tag" style="${isMatrix?'background:var(--black);color:var(--white);border-color:var(--black)':''}">${roleEn}</div>
+      </div>
+      <div class="plant-details">
+        <div class="plant-detail-item"><span class="plant-detail-val">${hStr}</span><div class="plant-detail-key">高度 cm</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">NT$${price}</span><div class="plant-detail-key">${pot} 估價</div></div>
+        <div class="plant-detail-item"><span class="plant-detail-val">× ${qty}</span><div class="plant-detail-key">建議盆數</div></div>
+      </div>
+      <div class="plant-rationale">
+        ${plant.family_zh ? '<strong>'+plant.family_zh+'</strong> · ' : ''}${ARCH_ZH[plant.architecture]||''} · Piet 相似度 ${plant.piet_similarity ? Math.round(plant.piet_similarity*100)+'%' : '—'}
+        ${tagHtml ? '<div class="tag-row" style="margin-top:.5rem">'+tagHtml+'</div>' : ''}
+        ${autumnDesc ? '<div style="margin-top:.4rem;font-size:.78rem;color:var(--g70)">'+autumnDesc+'</div>' : ''}
+      </div>`;
+    t2.appendChild(card);
+  });
+  const misc = Math.round((totalPlant * 0.4 + 200) / 50) * 50;
+  const total = totalPlant + misc;
+  const totalQty = palette.reduce((s,p)=>s+calcQty(p,inputs.areaFactor),0);
+  const bk = document.createElement('div');
+  bk.className = 'budget-block';
+  bk.innerHTML = `
+    <div class="budget-label">植栽材料費估算 · Estimated Cost</div>
+    <div class="budget-total"><small>NT$</small> ${total.toLocaleString()}</div>
+    <div class="budget-lines">
+      <div class="budget-line"><span>植物材料（${totalQty} 盆）</span><span class="budget-line-val">${totalPlant.toLocaleString()}</span></div>
+      <div class="budget-line"><span>介質、盆器、運費（估算）</span><span class="budget-line-val">${misc.toLocaleString()}</span></div>
+    </div>`;
+  t2.appendChild(bk);
+}
+
+function _renderTab3(palette, inputs) {
+  const tbody = document.querySelector('#t3 .quote-table tbody');
+  if (!tbody) return;
+  let totalPlant = 0;
+  const rows = palette.map(plant => {
+    const qty = calcQty(plant, inputs.areaFactor);
+    const price = calcPrice(plant);
+    const sub = qty * price;
+    totalPlant += sub;
+    const pot = plant.pot_sizes && plant.pot_sizes[0] || '4吋';
+    return `<tr>
+      <td>${plant.name_zh}<br><span style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--g50)">${pot}盆</span></td>
+      <td class="qtmono" style="color:var(--g50);font-size:.6rem">${ROLE_LABEL_EN[plant._role]||plant._role}</td>
+      <td class="qtmono" style="text-align:right">${price}</td>
+      <td class="qtmono" style="text-align:right">×${qty}</td>
+      <td class="qtmono" style="text-align:right;font-weight:500">${sub.toLocaleString()}</td>
+    </tr>`;
+  });
+  const misc = Math.round((totalPlant * 0.4 + 200) / 50) * 50;
+  const total = totalPlant + misc;
+  const d = new Date();
+  const ds = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+  document.querySelectorAll('#t3 .qmv')[0] && (document.querySelectorAll('#t3 .qmv')[0].textContent = 'QT-'+ds.replace(/\./g,''));
+  document.querySelectorAll('#t3 .qmv')[1] && (document.querySelectorAll('#t3 .qmv')[1].textContent = ds);
+  tbody.innerHTML = rows.join('') +
+    `<tr class="quote-subtotal"><td colspan="4">植物材料小計</td><td class="qtmono" style="text-align:right">${totalPlant.toLocaleString()}</td></tr>
+     <tr class="quote-subtotal"><td colspan="4">介質、盆器、運費（估算）</td><td class="qtmono" style="text-align:right">${misc.toLocaleString()}</td></tr>
+     <tr class="quote-total"><td colspan="4">Total · 合計</td><td style="text-align:right">NT$ ${total.toLocaleString()}</td></tr>`;
+}
+
+function _renderLegend(palette) {
+  const legend = document.querySelector('#t1 .legend');
+  if (!legend) return;
+  legend.innerHTML = palette.map((p,i)=>`
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${LEGEND_COLORS[i%LEGEND_COLORS.length]}"></div>
+      <span class="legend-text">${p.name_zh} · ${ROLE_LABEL_EN[p._role]||p._role}</span>
+    </div>`).join('');
+}
+
+function _renderLayerDiag(palette) {
+  const diag = document.querySelector('.layer-diagram');
+  if (!diag) return;
+  diag.innerHTML = palette.map(p => {
+    const hStr = p.height_cm ? p.height_cm[0]+'-'+p.height_cm[1]+'cm' : '';
+    return `<div class="layer-row2">
+      <div class="layer-bar" style="background:${ROLE_COLOR[p.role]||'#4A6A38'}"></div>
+      <div class="layer-content">
+        <div class="layer-role">${ROLE_LABEL_ZH[p._role]||p._role}</div>
+        <div class="layer-plant">${p.name_zh}</div>
+        <div class="layer-note">${hStr}${hStr&&(p.architecture||p.family_zh)?'　·　':''}${ARCH_ZH[p.architecture]||''}${p.family_zh?' · '+p.family_zh:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+const FALLBACK_PLANTS = [
+  { id:'fb-001', name_zh:'台灣野古草', name_latin:'Arundinella formosana', family_zh:'禾本科',
+    role:'matrix', architecture:'transparent', height_cm:[60,120], piet_similarity:0.88,
+    site:{ light:['full','partial'], moisture:['dry','mesic'] },
+    match_tags:['飄逸','冬骨幹','禾本科'], pot_sizes:['4吋','5吋'],
+    seasons:{ autumn:'穗序金黃，飄逸動感' } },
+  { id:'fb-002', name_zh:'台灣澤蘭', name_latin:'Eupatorium formosanum', family_zh:'菊科',
+    role:'primary', architecture:'upright', height_cm:[120,200], piet_similarity:0.90,
+    site:{ light:['full','partial'], moisture:['mesic','wet'] },
+    match_tags:['透明型','秋花','昆蟲蜜源'], pot_sizes:['4吋','5吋'],
+    seasons:{ autumn:'粉白花序盛開，蝴蝶群聚' } },
+  { id:'fb-003', name_zh:'台灣百合', name_latin:'Lilium formosanum', family_zh:'百合科',
+    role:'scatter', architecture:'emergent', height_cm:[60,180], piet_similarity:0.82,
+    site:{ light:['full','partial'], moisture:['dry','mesic'] },
+    match_tags:['突現型','白花','夏花'], pot_sizes:['3吋','4吋'],
+    seasons:{ summer:'潔白花朵向陽開放' } },
+  { id:'fb-004', name_zh:'地稔', name_latin:'Melastoma candidum', family_zh:'野牡丹科',
+    role:'filler', architecture:'leafy_mound', height_cm:[30,60], piet_similarity:0.65,
+    site:{ light:['full','partial'], moisture:['dry','mesic'] },
+    match_tags:['紫粉花','地被','常綠'], pot_sizes:['3吋','4吋'],
+    seasons:{ summer:'粉紫花朵持續開放' } }
+];
+
+/* ============================================================
+   THREE.JS 3D SIMULATION
+============================================================ */
+let T = null; // THREE namespace alias
+let SIM = {
+  scene: null, camera: null, renderer: null, animId: null,
+  groups: {},                        // { thriller, filler, spiller, matrix }
+  layerVis: { thriller:true, filler:true, spiller:true, matrix:true },
+  season: 'summer',
+  mode: 'photo',                     // 'photo' | 'ar'
+  cameraStream: null,
+  initialized: false,
+  angleY: 22                         // elevation angle in degrees
+};
+
+/* ─── Season colour palette ─────────────────────── */
+const PALETTE = {
+  spring: { stem:0x3A5C28, leaf:0x527840, flower:0xD4D0B8, plume:0xA8C890, accent:0xC8E0A8 },
+  summer: { stem:0x2E4E20, leaf:0x3E6430, flower:0xA0B070, plume:0x7A9E60, accent:0x88A868 },
+  autumn: { stem:0x5C4818, leaf:0x7A5820, flower:0xB88030, plume:0xC89840, accent:0xD4A848 },
+  winter: { stem:0x585848, leaf:0x686858, flower:0x989888, plume:0xB8B8A8, accent:0xA8A898 }
+};
+
+/* ─── Init Three.js ─────────────────────────────── */
+function initThreeJS() {
+  T = THREE;
+  const wrap   = document.getElementById('simWrap');
+  const canvas = document.getElementById('simCanvas');
+  const W = wrap.clientWidth  || 360;
+  const H = wrap.clientHeight || 270;
+
+  SIM.scene = new T.Scene();
+
+  SIM.camera = new T.PerspectiveCamera(52, W/H, 0.05, 80);
+  _setCameraAngle(SIM.angleY);
+
+  SIM.renderer = new T.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  SIM.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  SIM.renderer.setSize(W, H, false);
+  SIM.renderer.setClearColor(0x000000, 0);
+
+  _setupLights();
+  _buildPlants();
+  _startAnim();
+  SIM.initialized = true;
+}
+
+function _setCameraAngle(deg) {
+  const rad = deg * Math.PI / 180;
+  const dist = 2.4;
+  SIM.camera.position.set(0, dist * Math.sin(rad), dist * Math.cos(rad));
+  SIM.camera.lookAt(0, 0.15, 0);
+  SIM.camera.updateProjectionMatrix();
+}
+
+function _setupLights() {
+  SIM.scene.add(new T.AmbientLight(0xFFFFFF, 0.55));
+  const sun = new T.DirectionalLight(0xFFF5E8, 1.0);
+  sun.position.set(2, 4, 2);
+  SIM.scene.add(sun);
+  const fill = new T.DirectionalLight(0xE8F5E8, 0.35);
+  fill.position.set(-2, 2, 2);
+  SIM.scene.add(fill);
+}
+
+/* ─── Build / rebuild plant scene ──────────────── */
+function _buildPlants() {
+  ['thriller','filler','spiller','matrix'].forEach(k => {
+    if (SIM.groups[k]) SIM.scene.remove(SIM.groups[k]);
+    SIM.groups[k] = new T.Group();
+    SIM.groups[k].visible = SIM.layerVis[k];
+    SIM.scene.add(SIM.groups[k]);
+  });
+
+  _getLayout().forEach(p => {
+    const mesh = _makePlant(p.type);
+    if (!mesh) return;
+    mesh.position.set(p.x, 0, p.z);
+    mesh.rotation.y = Math.random() * Math.PI * 2;
+    const gk = p.type.startsWith('filler') ? 'filler'
+             : p.type === 'matrix'          ? 'matrix'
+             : p.type === 'spiller'         ? 'spiller' : 'thriller';
+    SIM.groups[gk].add(mesh);
+  });
+}
+
+/* ─── Oudolf naturalistic layout ───────────────── */
+function _getLayout() {
+  const j = () => (Math.random()-0.5)*0.11;
+  const plants = [];
+
+  // Matrix – background fill, irregular clusters
+  [[-1.1,-0.65],[-0.75,-0.7],[-0.3,-0.65],[0.15,-0.62],[0.55,-0.68],
+   [0.9,-0.62],[-0.9,-0.88],[0.3,-0.88],[0.7,-0.86],[-0.5,-0.86],
+   [-1.2,-0.5],[1.1,-0.56],[-0.1,-0.92],[0.85,-0.47],[-0.65,-0.52]]
+  .forEach(([x,z]) => plants.push({ type:'matrix', x:x+j(), z:z+j() }));
+
+  // Filler Aster – naturalistic drift, left-centre
+  [[-0.6,0.02],[-0.74,0.15],[-0.44,0.12],[-0.62,0.27],[-0.5,-0.09]]
+  .forEach(([x,z]) => plants.push({ type:'filler_aster', x:x+j(), z:z+j() }));
+
+  // Filler Eupatorium – drift, right-centre
+  [[0.5,0.06],[0.66,0.19],[0.43,0.16],[0.58,-0.04],[0.72,0.02]]
+  .forEach(([x,z]) => plants.push({ type:'filler_eupt', x:x+j(), z:z+j() }));
+
+  // Thriller – accent punctuation
+  plants.push({ type:'thriller', x:-0.05, z:0.36 });
+  plants.push({ type:'thriller', x: 0.13, z:0.53 });
+  plants.push({ type:'thriller', x:-0.19, z:0.49 });
+
+  // Spiller – front edge
+  [[-0.85,0.62],[-0.45,0.66],[0.0,0.68],[0.46,0.65],[0.86,0.61]]
+  .forEach(([x,z]) => plants.push({ type:'spiller', x:x+j()*0.5, z:z+Math.random()*0.03 }));
+
+  return plants;
+}
+
+/* ─── Plant factory ─────────────────────────────── */
+function _mat(key, opacity) {
+  const col = PALETTE[SIM.season][key] || 0x4A6A38;
+  const m = new T.MeshLambertMaterial({ color: col });
+  if (opacity !== undefined && opacity < 1) { m.transparent = true; m.opacity = opacity; }
+  return m;
+}
+
+function _makePlant(type) {
+  switch(type) {
+    case 'thriller':      return _makeThriller();
+    case 'filler_aster':  return _makeAster();
+    case 'filler_eupt':   return _makeEupt();
+    case 'spiller':       return _makeSpiller();
+    case 'matrix':        return _makeMatrix();
+    default: return null;
+  }
+}
+
+function _makeThriller() {
+  const g = new T.Group();
+  for (let i = 0; i < 3; i++) {
+    const h = 1.2 + Math.random()*0.38;
+    const ox = (Math.random()-.5)*.13, oz = (Math.random()-.5)*.09;
+    // stem
+    const stem = new T.Mesh(new T.CylinderGeometry(.008,.016,h,4), _mat('stem'));
+    stem.position.set(ox, h/2, oz);
+    stem.rotation.z = (Math.random()-.5)*.1;
+    g.add(stem);
+    // plume (5 cones at top)
+    for (let j = 0; j < 5; j++) {
+      const ph = .16+Math.random()*.1;
+      const plume = new T.Mesh(new T.ConeGeometry(.04+Math.random()*.03, ph, 4), _mat('plume', .88));
+      plume.position.set(
+        ox+(Math.random()-.5)*.12, h+ph/2+Math.random()*.06, oz+(Math.random()-.5)*.08
+      );
+      plume.rotation.z = (Math.random()-.5)*.55;
+      plume.rotation.x = (Math.random()-.5)*.3;
+      g.add(plume);
+    }
+  }
+  return g;
+}
+
+function _makeAster() {
+  const g = new T.Group();
+  for (let i = 0; i < 4; i++) {
+    const h = .38+Math.random()*.16;
+    const ox = (Math.random()-.5)*.2, oz = (Math.random()-.5)*.15;
+    g.add(Object.assign(
+      new T.Mesh(new T.CylinderGeometry(.006,.011,h,4), _mat('stem')),
+      { position: new T.Vector3(ox, h/2, oz),
+        rotation: new T.Euler((Math.random()-.5)*.12, 0, (Math.random()-.5)*.18) }
+    ));
+    // leaf mass
+    const leaf = new T.Mesh(new T.SphereGeometry(.1+Math.random()*.05,6,4), _mat('leaf',.92));
+    leaf.position.set(ox, h+.08, oz);
+    leaf.scale.set(1, .72, 1);
+    g.add(leaf);
+    // flowers
+    const fcol = SIM.season==='autumn' ? 0x9898C0
+               : SIM.season==='spring' ? 0xD8D8EC : 0xB0C8A0;
+    for (let j = 0; j < 3; j++) {
+      const f = new T.Mesh(new T.SphereGeometry(.018,4,3),
+        new T.MeshLambertMaterial({ color: fcol }));
+      f.position.set(ox+(Math.random()-.5)*.14, h+.17+Math.random()*.08, oz+(Math.random()-.5)*.1);
+      g.add(f);
+    }
+  }
+  return g;
+}
+
+function _makeEupt() {
+  const g = new T.Group();
+  for (let i = 0; i < 3; i++) {
+    const h = .52+Math.random()*.22;
+    const ox = (Math.random()-.5)*.18, oz = (Math.random()-.5)*.12;
+    g.add(Object.assign(
+      new T.Mesh(new T.CylinderGeometry(.007,.013,h,4), _mat('stem')),
+      { position: new T.Vector3(ox,h/2,oz) }
+    ));
+    // flat umbel head
+    const umbel = new T.Mesh(
+      new T.CylinderGeometry(.12+Math.random()*.04,.08,.04,7),
+      _mat('flower',.88)
+    );
+    umbel.position.set(ox, h+.02, oz);
+    g.add(umbel);
+  }
+  return g;
+}
+
+function _makeSpiller() {
+  const g = new T.Group();
+  const mat = new T.Mesh(new T.SphereGeometry(.2+Math.random()*.08,8,3), _mat('leaf',.85));
+  mat.scale.set(1,.12,1);
+  mat.position.y = .02;
+  g.add(mat);
+  for (let i = 0; i < 5; i++) {
+    const r = new T.Mesh(new T.SphereGeometry(.04+Math.random()*.02,5,3), _mat('leaf',.9));
+    r.position.set((Math.random()-.5)*.3, .04+Math.random()*.03, (Math.random()-.5)*.2);
+    r.scale.set(1,.55,1);
+    g.add(r);
+  }
+  return g;
+}
+
+function _makeMatrix() {
+  const g = new T.Group();
+  const n = 4+Math.floor(Math.random()*3);
+  for (let i = 0; i < n; i++) {
+    const h = .34+Math.random()*.18;
+    const blade = new T.Mesh(new T.CylinderGeometry(.004,.008,h,3), _mat('stem'));
+    blade.position.set((Math.random()-.5)*.18, h/2, (Math.random()-.5)*.12);
+    blade.rotation.z = (Math.random()-.5)*.24;
+    blade.rotation.x = (Math.random()-.5)*.15;
+    g.add(blade);
+  }
+  return g;
+}
+
+/* ─── Wind animation ────────────────────────────── */
+function _startAnim() {
+  if (SIM.animId) cancelAnimationFrame(SIM.animId);
+  function tick() {
+    SIM.animId = requestAnimationFrame(tick);
+    const t = Date.now() * .001;
+    if (SIM.groups.thriller) {
+      SIM.groups.thriller.children.forEach((g,i) => {
+        g.rotation.z = Math.sin(t*.75+i*1.4)*.025;
+        g.rotation.x = Math.sin(t*.55+i*.9)*.012;
+      });
+    }
+    if (SIM.groups.matrix) {
+      SIM.groups.matrix.children.forEach((g,i) => {
+        g.rotation.z = Math.sin(t*1.1+i*.8)*.035;
+      });
+    }
+    if (SIM.groups.filler) {
+      SIM.groups.filler.children.forEach((g,i) => {
+        g.rotation.z = Math.sin(t*.6+i*1.1)*.015;
+      });
+    }
+    SIM.renderer.render(SIM.scene, SIM.camera);
+  }
+  tick();
+}
+
+/* ─── Public controls ───────────────────────────── */
+function setSeason(s) {
+  SIM.season = s;
+  document.querySelectorAll('.season-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.season === s));
+  _buildPlants(); // rebuild with new palette
+}
+
+function toggleLayer(key) {
+  SIM.layerVis[key] = !SIM.layerVis[key];
+  if (SIM.groups[key]) SIM.groups[key].visible = SIM.layerVis[key];
+  document.getElementById('lb_'+key).classList.toggle('off', !SIM.layerVis[key]);
+}
+
+function updateAngle(val) {
+  SIM.angleY = +val;
+  document.getElementById('angleVal').textContent = val + '°';
+  if (SIM.camera) _setCameraAngle(SIM.angleY);
+}
+
+/* ─── Renderer resize ───────────────────────────── */
+function _resizeSim() {
+  const wrap = document.getElementById('simWrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  if (SIM.renderer && W > 0 && H > 0) {
+    SIM.renderer.setSize(W, H, false);
+    SIM.camera.aspect = W/H;
+    SIM.camera.updateProjectionMatrix();
+  }
+}
+
+/* ─── Mode switching ────────────────────────────── */
+function setSimMode(mode) {
+  SIM.mode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+
+  const photoEl  = document.getElementById('simPhoto');
+  const videoEl  = document.getElementById('simVideo');
+  const ph       = document.getElementById('photoActions');
+  const ar       = document.getElementById('arActions');
+  const arNote   = document.getElementById('arNote');
+  const badge    = document.getElementById('simBadgeTag');
+
+  if (mode === 'photo') {
+    _stopCamera();
+    ph.style.display = 'flex';
+    ar.style.display = 'none';
+    arNote.style.display = 'none';
+    videoEl.style.display = 'none';
+    badge.textContent = '3D READY';
+    document.getElementById('simBadgeText').textContent = '台中市北區 · 南向 · 7㎡';
+  } else {
+    ph.style.display = 'none';
+    ar.style.display = 'flex';
+    arNote.style.display = 'block';
+    photoEl.style.display = 'none';
+    badge.textContent = 'LIVE AR';
+    document.getElementById('simBadgeText').textContent = '實景模式 · 相機啟動中';
+  }
+}
+
+/* ─── Camera (AR mode) ──────────────────────────── */
+async function toggleCamera() {
+  const btn = document.getElementById('camBtn');
+  if (SIM.cameraStream) {
+    _stopCamera();
+    btn.textContent = '▶ 啟動相機';
+    document.getElementById('simVideo').style.display = 'none';
+    document.getElementById('simPlaceholder').style.display = 'flex';
+    return;
+  }
+  try {
+    btn.textContent = '…請求相機權限';
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode:'environment', width:{ideal:1280}, height:{ideal:960} }
+    });
+    SIM.cameraStream = stream;
+    const v = document.getElementById('simVideo');
+    v.srcObject = stream;
+    v.style.display = 'block';
+    document.getElementById('simPlaceholder').style.display = 'none';
+    await v.play();
+    _resizeSim();
+    btn.textContent = '■ 停止相機';
+    document.getElementById('simBadgeText').textContent = '實景 AR · 植栽疊加中';
+  } catch(e) {
+    btn.textContent = '▶ 啟動相機';
+    alert('⚠️ 無法開啟相機\n' + e.message + '\n\n請確認瀏覽器相機權限已開啟。');
+  }
+}
+
+function _stopCamera() {
+  if (SIM.cameraStream) {
+    SIM.cameraStream.getTracks().forEach(t => t.stop());
+    SIM.cameraStream = null;
+  }
+}
+
+/* ─── Photo upload ──────────────────────────────── */
+function handlePhotoUpload(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('simPhoto');
+    img.onload = () => {
+      _resizeSim();
+      document.getElementById('simBadgeTag').textContent = '3D OVERLAY';
+    };
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    document.getElementById('simPlaceholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetPhoto() {
+  const img = document.getElementById('simPhoto');
+  img.src = ''; img.style.display = 'none';
+  document.getElementById('photoInput').value = '';
+  document.getElementById('simPlaceholder').style.display = 'flex';
+  document.getElementById('simBadgeTag').textContent = '3D READY';
+}
+
+/* ─── On tab open ───────────────────────────────── */
+let _simOpened = false;
+function onSimTabOpen() {
+  setTimeout(() => {
+    if (!_simOpened) {
+      initThreeJS();
+      _simOpened = true;
+    } else {
+      _resizeSim();
+    }
+  }, 60);
+}
+
+window.addEventListener('resize', () => { if (SIM.initialized) _resizeSim(); });
+
+/* ============================================================
+   COLOR TONE SELECTOR
+============================================================ */
+const COLOR_TONES = {
+  blue:   { label:'冷色調 · 藍色調', desc:'薰衣草藍、霧灰藍、粉藍', swatch:'#7EB5D6', bar:'linear-gradient(90deg,#A8D4EE,#7EB5D6,#5896BA,#3A6E96)' },
+  pink:   { label:'冷色調 · 粉紅色調', desc:'胭脂粉、玫瑰粉、淡粉', swatch:'#E8A0B0', bar:'linear-gradient(90deg,#F5C8D0,#E8A0B0,#D4708A,#B85070)' },
+  purple: { label:'冷色調 · 紫色調', desc:'淡紫、深紫、藍紫漸層', swatch:'#A080C0', bar:'linear-gradient(90deg,#CEB8E8,#A080C0,#7858A0,#583880)' },
+  yellow: { label:'暖色調 · 黃色調', desc:'奶油黃、金黃、亮橙黃', swatch:'#E8C840', bar:'linear-gradient(90deg,#F5E090,#E8C840,#D0A820,#A88010)' },
+  green:  { label:'暖色調 · 綠色調', desc:'草綠、深苔綠、嫩芽綠', swatch:'#70A858', bar:'linear-gradient(90deg,#B0D898,#70A858,#487838,#305820)' },
+  orange: { label:'暖色調 · 橘色調', desc:'南瓜橘、珊瑚橘、磚紅橘', swatch:'#E07840', bar:'linear-gradient(90deg,#F0B890,#E07840,#C05820,#983010)' },
+  brown:  { label:'暖色調 · 咖啡色調', desc:'大地棕、茶褐、沙漠米', swatch:'#9A7050', bar:'linear-gradient(90deg,#C8A880,#9A7050,#705030,#503820)' },
+  grey:   { label:'其他 · 灰色調', desc:'銀灰、煙灰、礦石灰', swatch:'#909090', bar:'linear-gradient(90deg,#D8D8D8,#A8A8A8,#787878,#484848)' },
+  white:  { label:'其他 · 白色調', desc:'象牙白、乳白、霧白', swatch:'#E8E4DC', bar:'linear-gradient(90deg,#FAFAFA,#F0EDE8,#E0DDD8,#CCCAC5)' },
+};
+
+function onColorToneChange(sel) {
+  const key = sel.value;
+  const tone = COLOR_TONES[key];
+  if (!tone) return;
+  document.getElementById('colorPreviewBar').style.background = tone.bar;
+  document.getElementById('colorSwatch').style.background = tone.swatch;
+  document.getElementById('colorBadgeText').innerHTML =
+    '<strong style="color:var(--black);font-weight:500">' + tone.label + '</strong><br>' + tone.desc;
+}
+
+// Init on load
+window.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('colorToneSelect');
+  if (sel) onColorToneChange(sel);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1340 @@
+[
+  {
+    "id": "tw-001",
+    "name_zh": "台灣野古草",
+    "name_latin": "Arundinella formosana",
+    "family_zh": "禾本科",
+    "role": "matrix",
+    "piet_analog": "Molinia caerulea",
+    "match_tags": [
+      "飄逸",
+      "冬骨幹",
+      "禾本科",
+      "透明型"
+    ],
+    "seasons": {
+      "spring": "萌芽返青，嫩綠翠亮",
+      "summer": "抽穗，細穗搖曳",
+      "autumn": "穗序金黃，飄逸動感",
+      "winter": "枯黃骨幹，冬季結構美學"
+    },
+    "season_colors": {
+      "spring": "#7db87d",
+      "summer": "#a8c86a",
+      "autumn": "#d4a84b",
+      "winter": "#b5926e"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        2000
+      ]
+    },
+    "height_cm": [
+      60,
+      120
+    ],
+    "density_per_m2": 6,
+    "winter_structure": true,
+    "csr_strategy": "S",
+    "architecture": "transparent",
+    "bloom_months": [
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.88,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#d4a84b"
+  },
+  {
+    "id": "tw-002",
+    "name_zh": "五節芒",
+    "name_latin": "Miscanthus floridulus",
+    "family_zh": "禾本科",
+    "role": "matrix",
+    "piet_analog": "Miscanthus sinensis",
+    "match_tags": [
+      "大型禾草",
+      "冬骨幹",
+      "秋穗",
+      "結構型"
+    ],
+    "seasons": {
+      "spring": "萌芽，基部叢生翠綠",
+      "summer": "高大叢生，葉片寬大",
+      "autumn": "穗序紫紅轉銀白，氣勢磅礡",
+      "winter": "枯稈挺立，強勁冬季骨幹"
+    },
+    "season_colors": {
+      "spring": "#5da85d",
+      "summer": "#6b9e5e",
+      "autumn": "#c9954a",
+      "winter": "#9b7b58"
+    },
+    "site": {
+      "light": [
+        "full"
+      ],
+      "moisture": [
+        "dry",
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        2500
+      ]
+    },
+    "height_cm": [
+      150,
+      300
+    ],
+    "density_per_m2": 1,
+    "winter_structure": true,
+    "csr_strategy": "C",
+    "architecture": "upright",
+    "bloom_months": [
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "pot_sizes": [
+      "5吋",
+      "1加侖"
+    ],
+    "piet_similarity": 0.85,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c8b0d0"
+  },
+  {
+    "id": "tw-003",
+    "name_zh": "白茅",
+    "name_latin": "Imperata cylindrica",
+    "family_zh": "禾本科",
+    "role": "matrix",
+    "piet_analog": "Calamagrostis x acutiflora",
+    "match_tags": [
+      "銀白穗序",
+      "地被型",
+      "禾本科",
+      "光感"
+    ],
+    "seasons": {
+      "spring": "嫩葉密叢，草地質感",
+      "summer": "銀白穗序迎風飄揚",
+      "autumn": "穗序蓬鬆如棉，低矮鋪陳",
+      "winter": "枯葉覆地，樸素之美"
+    },
+    "season_colors": {
+      "spring": "#8fc87f",
+      "summer": "#e8e8d8",
+      "autumn": "#d8c89a",
+      "winter": "#c4aa80"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      30,
+      80
+    ],
+    "density_per_m2": 9,
+    "winter_structure": false,
+    "csr_strategy": "CR",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      4,
+      5,
+      6
+    ],
+    "structural_months": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.72,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#f0f0ec"
+  },
+  {
+    "id": "tw-004",
+    "name_zh": "台灣澤蘭",
+    "name_latin": "Eupatorium formosanum",
+    "family_zh": "菊科",
+    "role": "primary",
+    "piet_analog": "Eupatorium maculatum",
+    "match_tags": [
+      "透明型",
+      "秋花",
+      "高大直立",
+      "昆蟲蜜源"
+    ],
+    "seasons": {
+      "spring": "葉叢萌發，對生葉形",
+      "summer": "莖幹挺立，快速生長",
+      "autumn": "粉白頭狀花序盛開，蝴蝶群聚",
+      "winter": "枯莖持立，種子飛散"
+    },
+    "season_colors": {
+      "spring": "#6ba86b",
+      "summer": "#5a9a5a",
+      "autumn": "#d8c8d0",
+      "winter": "#a08878"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        1800
+      ]
+    },
+    "height_cm": [
+      120,
+      200
+    ],
+    "density_per_m2": 2,
+    "winter_structure": true,
+    "csr_strategy": "CR",
+    "architecture": "upright",
+    "bloom_months": [
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.9,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e8d0d8"
+  },
+  {
+    "id": "tw-005",
+    "name_zh": "山菊",
+    "name_latin": "Farfugium japonicum var. formosanum",
+    "family_zh": "菊科",
+    "role": "primary",
+    "piet_analog": "Ligularia dentata",
+    "match_tags": [
+      "葉狀土丘",
+      "冬花",
+      "常綠",
+      "陰濕地"
+    ],
+    "seasons": {
+      "spring": "光滑圓葉，濃綠光澤",
+      "summer": "葉片展開，耐熱常綠",
+      "autumn": "金黃菊花盛開，溫暖色調",
+      "winter": "仍有花期，常綠持色"
+    },
+    "season_colors": {
+      "spring": "#4a8a5a",
+      "summer": "#3d7a4d",
+      "autumn": "#e8b832",
+      "winter": "#d4a828"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        2000
+      ]
+    },
+    "height_cm": [
+      40,
+      80
+    ],
+    "density_per_m2": 4,
+    "winter_structure": true,
+    "csr_strategy": "S",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "structural_months": [
+      1,
+      2,
+      3,
+      10,
+      11,
+      12
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.78,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e8b832"
+  },
+  {
+    "id": "tw-006",
+    "name_zh": "射干",
+    "name_latin": "Iris domestica",
+    "family_zh": "鳶尾科",
+    "role": "primary",
+    "piet_analog": "Iris sibirica",
+    "match_tags": [
+      "直立型",
+      "橙花",
+      "扇形葉",
+      "鳶尾科"
+    ],
+    "seasons": {
+      "spring": "扇形葉片展開，翠綠清新",
+      "summer": "橙色花朵點綴，豔麗奪目",
+      "autumn": "果莢開裂，黑色種子如珠",
+      "winter": "枯葉提供地面結構"
+    },
+    "season_colors": {
+      "spring": "#7ab87a",
+      "summer": "#e87832",
+      "autumn": "#a85828",
+      "winter": "#8a7060"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      60,
+      100
+    ],
+    "density_per_m2": 4,
+    "winter_structure": false,
+    "csr_strategy": "S",
+    "architecture": "upright",
+    "bloom_months": [
+      7,
+      8,
+      9
+    ],
+    "structural_months": [
+      9,
+      10,
+      11
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.76,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e87832"
+  },
+  {
+    "id": "tw-007",
+    "name_zh": "野薑花",
+    "name_latin": "Hedychium coronarium",
+    "family_zh": "薑科",
+    "role": "primary",
+    "piet_analog": "Rodgersia aesculifolia",
+    "match_tags": [
+      "高大挺立",
+      "夏花芬芳",
+      "濕地",
+      "蝴蝶蜜源"
+    ],
+    "seasons": {
+      "spring": "葉片整齊展開，清新翠綠",
+      "summer": "純白花朵盛放，香氣瀰漫",
+      "autumn": "果實橙紅，葉色轉黃",
+      "winter": "地上部枯萎，地下塊莖越冬"
+    },
+    "season_colors": {
+      "spring": "#68b068",
+      "summer": "#f8f8f0",
+      "autumn": "#e8a040",
+      "winter": "#c4a870"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        1000
+      ]
+    },
+    "height_cm": [
+      100,
+      200
+    ],
+    "density_per_m2": 2,
+    "winter_structure": false,
+    "csr_strategy": "C",
+    "architecture": "upright",
+    "bloom_months": [
+      7,
+      8,
+      9,
+      10
+    ],
+    "structural_months": [
+      9,
+      10
+    ],
+    "pot_sizes": [
+      "5吋",
+      "1加侖"
+    ],
+    "piet_similarity": 0.7,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#f8f8f0"
+  },
+  {
+    "id": "tw-008",
+    "name_zh": "台灣馬藍",
+    "name_latin": "Strobilanthes cusia",
+    "family_zh": "爵床科",
+    "role": "primary",
+    "piet_analog": "Salvia nemorosa",
+    "match_tags": [
+      "藍紫花",
+      "秋花",
+      "葉色深綠",
+      "藍染植物"
+    ],
+    "seasons": {
+      "spring": "對生葉萌發，葉色深綠",
+      "summer": "茂盛生長，形成叢生",
+      "autumn": "淡紫藍花穗盛開，深秋魅力",
+      "winter": "宿根，地上部部分枯萎"
+    },
+    "season_colors": {
+      "spring": "#4a7a5a",
+      "summer": "#3d6a4d",
+      "autumn": "#8888c8",
+      "winter": "#6a7060"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      60,
+      120
+    ],
+    "density_per_m2": 3,
+    "winter_structure": false,
+    "csr_strategy": "S",
+    "architecture": "upright",
+    "bloom_months": [
+      10,
+      11,
+      12
+    ],
+    "structural_months": [
+      10,
+      11,
+      12
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.73,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#8888c8"
+  },
+  {
+    "id": "tw-009",
+    "name_zh": "台灣百合",
+    "name_latin": "Lilium formosanum",
+    "family_zh": "百合科",
+    "role": "scatter",
+    "piet_analog": "Verbascum olympicum",
+    "match_tags": [
+      "突現型",
+      "白花",
+      "夏花",
+      "台灣意象"
+    ],
+    "seasons": {
+      "spring": "細長葉叢低調萌發",
+      "summer": "潔白花朵向陽開放，香氣濃郁",
+      "autumn": "種莢成熟，風播傳種",
+      "winter": "地下鱗莖休眠越冬"
+    },
+    "season_colors": {
+      "spring": "#7ab87a",
+      "summer": "#f8f8f8",
+      "autumn": "#c8a870",
+      "winter": "#a08060"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        3000
+      ]
+    },
+    "height_cm": [
+      60,
+      180
+    ],
+    "density_per_m2": 1.5,
+    "winter_structure": false,
+    "csr_strategy": "R",
+    "architecture": "emergent",
+    "bloom_months": [
+      6,
+      7,
+      8
+    ],
+    "structural_months": [
+      8,
+      9
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.82,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#f8f8f8"
+  },
+  {
+    "id": "tw-010",
+    "name_zh": "兔尾草",
+    "name_latin": "Uraria crinita",
+    "family_zh": "豆科",
+    "role": "scatter",
+    "piet_analog": "Sanguisorba officinalis",
+    "match_tags": [
+      "飄逸穗序",
+      "粉紫花",
+      "秋季",
+      "蝶豆科"
+    ],
+    "seasons": {
+      "spring": "三出複葉萌芽，葉色嫩綠",
+      "summer": "直立莖幹，葉片茂盛",
+      "autumn": "粉紫長穗如兔尾，優雅飄動",
+      "winter": "枯莖殘存，提供立體感"
+    },
+    "season_colors": {
+      "spring": "#78b878",
+      "summer": "#5a9a5a",
+      "autumn": "#c8a8c8",
+      "winter": "#987888"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      60,
+      150
+    ],
+    "density_per_m2": 2,
+    "winter_structure": true,
+    "csr_strategy": "S",
+    "architecture": "emergent",
+    "bloom_months": [
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.84,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c8a8c8"
+  },
+  {
+    "id": "tw-011",
+    "name_zh": "台灣金絲桃",
+    "name_latin": "Hypericum formosanum",
+    "family_zh": "藤黃科",
+    "role": "scatter",
+    "piet_analog": "Hypericum calycinum",
+    "match_tags": [
+      "金黃花",
+      "夏花",
+      "半灌木",
+      "蜜源"
+    ],
+    "seasons": {
+      "spring": "嫩葉展開，翠綠光亮",
+      "summer": "金黃花朵繁花似錦，鮮豔奪目",
+      "autumn": "果實轉紅，葉色微黃",
+      "winter": "半常綠，維持低矮灌叢形態"
+    },
+    "season_colors": {
+      "spring": "#7ac87a",
+      "summer": "#e8c820",
+      "autumn": "#d89040",
+      "winter": "#8a9860"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "mesic"
+      ],
+      "altitude_m": [
+        500,
+        2500
+      ]
+    },
+    "height_cm": [
+      40,
+      80
+    ],
+    "density_per_m2": 3,
+    "winter_structure": true,
+    "csr_strategy": "S",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "structural_months": [
+      10,
+      11,
+      12
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.68,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e8c820"
+  },
+  {
+    "id": "tw-012",
+    "name_zh": "地稔",
+    "name_latin": "Melastoma candidum",
+    "family_zh": "野牡丹科",
+    "role": "filler",
+    "piet_analog": "Geranium macrorrhizum",
+    "match_tags": [
+      "紫粉花",
+      "地被",
+      "常綠",
+      "蔓延型"
+    ],
+    "seasons": {
+      "spring": "嫩葉鮮亮，低矮鋪地",
+      "summer": "粉紫花朵持續開放，豔麗蔓生",
+      "autumn": "果實紫黑，鳥食植物",
+      "winter": "常綠覆地，維持地被質感"
+    },
+    "season_colors": {
+      "spring": "#6ab86a",
+      "summer": "#c878c8",
+      "autumn": "#7838a8",
+      "winter": "#4a7a5a"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1000
+      ]
+    },
+    "height_cm": [
+      30,
+      60
+    ],
+    "density_per_m2": 8,
+    "winter_structure": true,
+    "csr_strategy": "C",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "structural_months": [
+      1,
+      2,
+      3,
+      11,
+      12
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.65,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c878c8"
+  },
+  {
+    "id": "tw-013",
+    "name_zh": "台灣佛甲草",
+    "name_latin": "Sedum formosanum",
+    "family_zh": "景天科",
+    "role": "filler",
+    "piet_analog": "Sedum acre",
+    "match_tags": [
+      "多肉",
+      "黃花",
+      "旱地",
+      "岩石地被"
+    ],
+    "seasons": {
+      "spring": "肉質嫩葉鮮綠，匍匐蔓生",
+      "summer": "金黃小花盛開，星點點綴",
+      "autumn": "葉色轉為紅橙，季相豐富",
+      "winter": "半常綠，維持地面覆蓋"
+    },
+    "season_colors": {
+      "spring": "#88c888",
+      "summer": "#e8d020",
+      "autumn": "#e09040",
+      "winter": "#a8c870"
+    },
+    "site": {
+      "light": [
+        "full"
+      ],
+      "moisture": [
+        "dry"
+      ],
+      "altitude_m": [
+        0,
+        2000
+      ]
+    },
+    "height_cm": [
+      5,
+      20
+    ],
+    "density_per_m2": 16,
+    "winter_structure": false,
+    "csr_strategy": "S",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      4,
+      5,
+      6
+    ],
+    "structural_months": [
+      10,
+      11
+    ],
+    "pot_sizes": [
+      "3吋"
+    ],
+    "piet_similarity": 0.58,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e8d020"
+  },
+  {
+    "id": "tw-014",
+    "name_zh": "玉山金梅",
+    "name_latin": "Potentilla formosana",
+    "family_zh": "薔薇科",
+    "role": "filler",
+    "piet_analog": "Potentilla nepalensis",
+    "match_tags": [
+      "白花",
+      "低矮",
+      "高山地被",
+      "薔薇科"
+    ],
+    "seasons": {
+      "spring": "羽狀複葉萌芽，嬌小可愛",
+      "summer": "白色小花繁茂，清雅素淨",
+      "autumn": "葉色轉橙，果實成熟",
+      "winter": "半休眠，地上部枯萎"
+    },
+    "season_colors": {
+      "spring": "#78c878",
+      "summer": "#f0f0e8",
+      "autumn": "#d8a858",
+      "winter": "#a89070"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        1000,
+        3500
+      ]
+    },
+    "height_cm": [
+      15,
+      40
+    ],
+    "density_per_m2": 10,
+    "winter_structure": false,
+    "csr_strategy": "S",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "structural_months": [
+      8,
+      9
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.62,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#f0f0e8"
+  },
+  {
+    "id": "tw-015",
+    "name_zh": "鴨跖草",
+    "name_latin": "Commelina communis",
+    "family_zh": "鴨跖草科",
+    "role": "filler",
+    "piet_analog": "Brunnera macrophylla",
+    "match_tags": [
+      "藍紫花",
+      "地被",
+      "填縫植物",
+      "濕地邊緣"
+    ],
+    "seasons": {
+      "spring": "嫩莖蔓生，葉色鮮綠",
+      "summer": "藍紫小花不斷開放，清涼色調",
+      "autumn": "仍持續開花，深秋魅力",
+      "winter": "一年生，以種子越冬"
+    },
+    "season_colors": {
+      "spring": "#78b878",
+      "summer": "#6888e0",
+      "autumn": "#5878d0",
+      "winter": "#989898"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic",
+        "wet"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      20,
+      50
+    ],
+    "density_per_m2": 12,
+    "winter_structure": false,
+    "csr_strategy": "R",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "structural_months": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "pot_sizes": [
+      "3吋"
+    ],
+    "piet_similarity": 0.55,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#6888e0"
+  },
+  {
+    "id": "tw-016",
+    "name_zh": "台灣蒲公英",
+    "name_latin": "Taraxacum formosanum",
+    "family_zh": "菊科",
+    "role": "filler",
+    "piet_analog": "Taraxacum officinale",
+    "match_tags": [
+      "黃花",
+      "蓮座型",
+      "自播",
+      "填縫"
+    ],
+    "seasons": {
+      "spring": "蓮座葉叢貼地，嫩黃花朵",
+      "summer": "花絮飛揚，具動態美感",
+      "autumn": "秋季再次開花",
+      "winter": "蓮座葉叢常綠持色"
+    },
+    "season_colors": {
+      "spring": "#e8d020",
+      "summer": "#f0f0f0",
+      "autumn": "#e8c820",
+      "winter": "#78a870"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        2500
+      ]
+    },
+    "height_cm": [
+      10,
+      30
+    ],
+    "density_per_m2": 15,
+    "winter_structure": false,
+    "csr_strategy": "R",
+    "architecture": "leafy_mound",
+    "bloom_months": [
+      2,
+      3,
+      4,
+      5,
+      9,
+      10
+    ],
+    "structural_months": [
+      2,
+      3,
+      9,
+      10
+    ],
+    "pot_sizes": [
+      "3吋"
+    ],
+    "piet_similarity": 0.52,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#e8d020"
+  },
+  {
+    "id": "tw-017",
+    "name_zh": "台灣一葉蘭",
+    "name_latin": "Pleione formosana",
+    "family_zh": "蘭科",
+    "role": "scatter",
+    "piet_analog": "Allium hollandicum",
+    "match_tags": [
+      "粉紫蘭花",
+      "春花",
+      "高海拔",
+      "散布珍稀"
+    ],
+    "seasons": {
+      "spring": "先花後葉，淡紫蘭花突現",
+      "summer": "葉片展開，翠綠一葉",
+      "autumn": "葉片轉黃，假球莖飽滿",
+      "winter": "落葉休眠，假球莖越冬"
+    },
+    "season_colors": {
+      "spring": "#c888c8",
+      "summer": "#5a9a5a",
+      "autumn": "#d4a830",
+      "winter": "#a09080"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic"
+      ],
+      "altitude_m": [
+        1000,
+        2500
+      ]
+    },
+    "height_cm": [
+      10,
+      25
+    ],
+    "density_per_m2": 5,
+    "winter_structure": false,
+    "csr_strategy": "S",
+    "architecture": "emergent",
+    "bloom_months": [
+      3,
+      4
+    ],
+    "structural_months": [
+      3,
+      4
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.72,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c888c8"
+  },
+  {
+    "id": "tw-018",
+    "name_zh": "芒萁",
+    "name_latin": "Dicranopteris linearis",
+    "family_zh": "裡白科",
+    "role": "matrix",
+    "piet_analog": "Dryopteris filix-mas",
+    "match_tags": [
+      "蕨類",
+      "常綠地被",
+      "酸性土",
+      "叉狀葉形"
+    ],
+    "seasons": {
+      "spring": "新葉捲旋展開，嫩綠可愛",
+      "summer": "叉狀葉片層層展開，形成茂密地被",
+      "autumn": "葉色深綠穩重，全年持色",
+      "winter": "常綠，是冬季最可靠的地被覆蓋"
+    },
+    "season_colors": {
+      "spring": "#90d090",
+      "summer": "#4a8a4a",
+      "autumn": "#3a7a3a",
+      "winter": "#3a7040"
+    },
+    "site": {
+      "light": [
+        "partial",
+        "shade"
+      ],
+      "moisture": [
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        2000
+      ]
+    },
+    "height_cm": [
+      30,
+      80
+    ],
+    "density_per_m2": 5,
+    "winter_structure": true,
+    "csr_strategy": "CS",
+    "architecture": "leafy_mound",
+    "bloom_months": [],
+    "structural_months": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "pot_sizes": [
+      "4吋",
+      "5吋"
+    ],
+    "piet_similarity": 0.68,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg"
+  },
+  {
+    "id": "tw-019",
+    "name_zh": "山紫蘇",
+    "name_latin": "Perilla frutescens var. purpurascens",
+    "family_zh": "唇形科",
+    "role": "filler",
+    "piet_analog": "Salvia officinalis 'Purpurascens'",
+    "match_tags": [
+      "紫葉",
+      "芳香",
+      "秋花",
+      "填充色塊"
+    ],
+    "seasons": {
+      "spring": "紫色嫩葉萌芽，色彩鮮明",
+      "summer": "紫葉茂盛，香氣濃郁",
+      "autumn": "淡紫花序盛開，葉花色系一致",
+      "winter": "一年生，種子越冬"
+    },
+    "season_colors": {
+      "spring": "#a070b0",
+      "summer": "#886898",
+      "autumn": "#c8a0d0",
+      "winter": "#989898"
+    },
+    "site": {
+      "light": [
+        "full",
+        "partial"
+      ],
+      "moisture": [
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1500
+      ]
+    },
+    "height_cm": [
+      40,
+      90
+    ],
+    "density_per_m2": 6,
+    "winter_structure": false,
+    "csr_strategy": "R",
+    "architecture": "upright",
+    "bloom_months": [
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      9,
+      10,
+      11
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.66,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c8a0d0"
+  },
+  {
+    "id": "tw-020",
+    "name_zh": "虎尾草",
+    "name_latin": "Chloris barbata",
+    "family_zh": "禾本科",
+    "role": "matrix",
+    "piet_analog": "Sporobolus heterolepis",
+    "match_tags": [
+      "低矮禾草",
+      "指狀穗序",
+      "地被質感",
+      "耐旱"
+    ],
+    "seasons": {
+      "spring": "細葉叢生，低矮草坪質感",
+      "summer": "指狀穗序輻射展開，造型獨特",
+      "autumn": "穗序由綠轉紫紅，色彩豐富",
+      "winter": "枯黃穗序殘存，地被骨幹"
+    },
+    "season_colors": {
+      "spring": "#88c080",
+      "summer": "#a8c870",
+      "autumn": "#c87858",
+      "winter": "#b09068"
+    },
+    "site": {
+      "light": [
+        "full"
+      ],
+      "moisture": [
+        "dry",
+        "mesic"
+      ],
+      "altitude_m": [
+        0,
+        1000
+      ]
+    },
+    "height_cm": [
+      20,
+      60
+    ],
+    "density_per_m2": 8,
+    "winter_structure": true,
+    "csr_strategy": "SR",
+    "architecture": "transparent",
+    "bloom_months": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "structural_months": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "pot_sizes": [
+      "3吋",
+      "4吋"
+    ],
+    "piet_similarity": 0.75,
+    "image_sm": "/public/plants/placeholder-sm.jpg",
+    "image_md": "/public/plants/placeholder-md.jpg",
+    "flower_color": "#c87858"
+  }
+]
