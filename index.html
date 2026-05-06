@@ -960,32 +960,12 @@ body {
 
   <!-- ── TAB 1: SIMULATION ── -->
   <div id="t1" class="tab-content active">
-    <div class="photo-frame">
-      <div class="photo-mock">
-        <div class="photo-grid-overlay"></div>
-        <!-- Silhouette plants -->
-        <div class="photo-silhouettes">
-          <div class="photo-plant-sil" style="width:18px;height:90px;opacity:.35"></div>
-          <div class="photo-plant-sil" style="width:30px;height:110px;border-radius:40% 60% 0 0;opacity:.5"></div>
-          <div class="photo-plant-sil" style="width:50px;height:75px;border-radius:50% 50% 0 0;opacity:.3"></div>
-          <div class="photo-plant-sil" style="width:22px;height:95px;opacity:.45"></div>
-          <div class="photo-plant-sil" style="width:40px;height:55px;border-radius:50% 50% 0 0;opacity:.25"></div>
-          <div class="photo-plant-sil" style="width:14px;height:70px;opacity:.35"></div>
-        </div>
-        <div style="position:absolute;top:1rem;left:1rem;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50);letter-spacing:.08em">SIMULATED VIEW</div>
-        <div class="photo-badge">
-          <div>
-            <div class="pbtext" id="pbLocationText">台中市北區 · 南向 · 7㎡ · 中層</div>
-            <div class="pbtext" style="margin-top:.1rem;color:var(--g20)">Summer · 16:00 · Simulated</div>
-          </div>
-          <div class="pbtag">AI MOCK</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- AI 圖像生成 -->
-    <!-- AI 四季模擬 (tab 式) -->
-    <div id="aiImageBlock" style="margin:1rem 0">
+    <!-- 地點標籤 -->
+    <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--g50);letter-spacing:.08em;margin-bottom:.5rem" id="pbLocationText">台中市北區 · 中型 5–10㎡</div>
+
+    <!-- AI 四季模擬 (tab 式) — 主要視覺 -->
+    <div id="aiImageBlock">
       <!-- 四季 tab 按鈕 -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)">
         <button class="season-tab-btn active" onclick="selectSeasonTab('spring',this)">春<br><span>Spring</span></button>
@@ -994,28 +974,28 @@ body {
         <button class="season-tab-btn" onclick="selectSeasonTab('winter',this)">冬<br><span>Winter</span></button>
       </div>
       <!-- 圖像顯示區 -->
-      <div id="seasonImgArea" style="border:1px solid var(--line);border-top:none;min-height:200px;background:var(--off);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
-        <div id="seasonImgPlaceholder" style="text-align:center;padding:2rem 1rem">
-          <div style="font-size:1.5rem;color:var(--g50);margin-bottom:.5rem">↑</div>
-          <div style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--black)">點擊下方按鈕生成此季節模擬圖</div>
-          <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50);margin-top:.25rem">每季約 NT$1–2</div>
+      <div id="seasonImgArea" style="border:1px solid var(--line);border-top:none;min-height:260px;background:var(--off);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden">
+        <div id="seasonImgPlaceholder" style="text-align:center;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center">
+          <div style="font-size:2rem;color:var(--g50);margin-bottom:.6rem">↓</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.75rem;color:var(--black);margin-bottom:.3rem">點擊下方按鈕生成此季節模擬圖</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50)">gpt-image-1 · 每季約 NT$1–2</div>
         </div>
-        <div id="seasonImgLoading" style="display:none;text-align:center;padding:2rem">
+        <div id="seasonImgLoading" style="display:none;flex-direction:column;align-items:center;padding:2rem">
           <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--g50)" id="seasonImgLoadingText">生成中，約需 15–30 秒…</div>
         </div>
-        <img id="seasonImgResult" style="display:none;width:100%" alt="AI 模擬">
+        <img id="seasonImgResult" style="display:none;width:100%" alt="AI 四季模擬">
       </div>
-      <div id="aiImgError" style="display:none;padding:.6rem;background:#FFF0F0;font-family:'DM Mono',monospace;font-size:.6rem;color:#c00;margin-top:.5rem"></div>
       <!-- 生成按鈕 -->
       <button id="genImgBtn" onclick="generateCurrentSeason()" style="
-        display:block;width:100%;padding:.8rem;margin-top:.5rem;
+        display:block;width:100%;padding:.9rem;margin-top:.5rem;
         border:1px solid var(--black);background:var(--black);
         color:var(--white);font-family:'DM Mono',monospace;
-        font-size:.7rem;letter-spacing:.12em;cursor:pointer;">
-        ✦ 生成 <span id="genBtnSeasonLabel">春</span> 季模擬圖
+        font-size:.75rem;letter-spacing:.12em;cursor:pointer;">
+        ✦ 生成 <span id="genBtnSeasonLabel">春</span> 季 AI 模擬圖
       </button>
+      <div id="aiImgError" style="display:none;padding:.6rem;background:#FFF0F0;font-family:'DM Mono',monospace;font-size:.6rem;color:#c00;margin-top:.5rem"></div>
       <div id="aiImgNote" style="display:none;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50);margin-top:.35rem;text-align:right">
-        gpt-image-1 · 每季約 NT$1–2
+        gpt-image-1 · 已生成，切換季節可繼續生成
       </div>
     </div>
 
