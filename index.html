@@ -1616,7 +1616,12 @@ function handlePietPhoto(input) {
 /* ── AI Image Generation ─────────────────────────────── */
 let _lastPalette = [], _lastInputs = {};
 
+let _genImgBusy = false;
+
 function generateAIImage() {
+  if (_genImgBusy) return;
+  _genImgBusy = true;
+
   const btn     = document.getElementById('genImgBtn');
   const loading = document.getElementById('aiImgLoading');
   const errBox  = document.getElementById('aiImgError');
@@ -1628,6 +1633,11 @@ function generateAIImage() {
   errBox.style.display  = 'none';
   imgEl.style.display   = 'none';
   note.style.display    = 'none';
+
+  function doFetch(attempt) {
+    loading.textContent = attempt > 1
+      ? `第 ${attempt} 次嘗試中，約需 15–30 秒…`
+      : '生成中，約需 15–30 秒…';
 
   fetch('/.netlify/functions/generate-image', {
     method: 'POST',
@@ -1653,7 +1663,12 @@ function generateAIImage() {
   })
   .then(r => r.json())
   .then(data => {
+    if ((data.error || '').toLowerCase().includes('overload') && attempt < 3) {
+      setTimeout(() => doFetch(attempt + 1), 5000);
+      return;
+    }
     loading.style.display = 'none';
+    _genImgBusy = false;
     if (data.url) {
       imgEl.src = data.url;
       imgEl.style.display = 'block';
@@ -1673,11 +1688,15 @@ function generateAIImage() {
     }
   })
   .catch(e => {
+    if (attempt < 3) { setTimeout(() => doFetch(attempt + 1), 5000); return; }
     loading.style.display = 'none';
+    _genImgBusy = false;
     errBox.textContent    = '連線失敗：' + e.message;
     errBox.style.display  = 'block';
     btn.style.display     = 'block';
   });
+  } // end doFetch
+  doFetch(1);
 }
 
 /* ── Fallback data ───────────────────────────────────── */
