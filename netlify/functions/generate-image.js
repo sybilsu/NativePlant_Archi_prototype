@@ -1,8 +1,6 @@
-const https = require('https');
-
 const MODEL   = 'gpt-image-1';
 const SIZE    = '1024x1024';
-const QUALITY = 'low';   // 最省費用：每張約 $0.01–0.02 (edit) / $0.02 (generate)
+const QUALITY = 'low';   // 最省費用
 
 const ARCH_DESC = {
   transparent: 'airy transparent grass swaying gently',
@@ -46,11 +44,10 @@ function buildPlantLines(palette, season) {
   }).join('\n  ');
 }
 
-function buildEditPrompt(palette, styles, location, lights, areaKey, season) {
+function buildEditPrompt(palette, styles, location, season) {
   const mood      = SEASON_MOOD[season] || SEASON_MOOD.summer;
   const styleText = styles.length ? styles.map(s => STYLE_DESC[s]||s).join('; ') : 'naturalistic Piet Oudolf planting';
   const plants    = buildPlantLines(palette, season);
-
   return `Add Taiwan native plants to this balcony/garden space in Piet Oudolf naturalistic matrix planting style.
 
 SEASON: ${mood.en} — ${mood.light}. COLOR PALETTE: ${mood.palette}.
@@ -63,71 +60,83 @@ PLANTS to add (keep original space structure, walls, floor — only add plants):
 Blend naturally into the existing space. Photorealistic. No text or labels.`;
 }
 
-function buildGeneratePrompt(palette, styles, location, lights, areaKey, season) {
+function buildGeneratePrompt(palette, styles, location, season) {
   const mood      = SEASON_MOOD[season] || SEASON_MOOD.summer;
   const styleText = styles.length ? styles.map(s => STYLE_DESC[s]||s).join('; ') : 'naturalistic Piet Oudolf planting';
   const plants    = buildPlantLines(palette, season);
-
   return `Photorealistic landscape garden photo. Piet Oudolf naturalistic planting.
 SEASON: ${mood.en} — ${mood.light}. PALETTE: ${mood.palette}.
 STYLE: ${styleText}. LOCATION: ${location}.
-PLANTS:\n  ${plants}
+PLANTS:
+  ${plants}
 Eye-level view, natural depth, professional photography. No people. No text.`;
 }
 
-/* ── Multipart form builder ─────────────────────────── */
-function buildMultipart(boundary, fields, imageB64) {
-  const parts = [];
-  for (const [k, v] of Object.entries(fields)) {
-    parts.push(
-      `--${boundary}\r\nContent-Disposition: form-data; name="${k}"\r\n\r\n${v}`
-    );
+/* ── API calls using native fetch (Node 18+) ─── */
+async function callGenerations(prompt) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 55000);
+  try {
+    const res = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        prompt,
+        n: 1,
+        size: SIZE,
+        quality: QUALITY,
+        response_format: 'b64_json'
+      })
+    });
+    const json = await res.json();
+    if (json.data && json.data[0]) {
+      return { ok: true, b64: json.data[0].b64_json || null };
+    }
+    return { ok: false, error: json.error?.message || JSON.stringify(json) };
+  } catch (e) {
+    return { ok: false, error: e.name === 'AbortError' ? 'Timeout (>55s)' : e.message };
+  } finally {
+    clearTimeout(timer);
   }
-  // image field
-  const imgBuf = Buffer.from(imageB64, 'base64');
-  const imgHeader = `--${boundary}\r\nContent-Disposition: form-data; name="image[]"; filename="site.jpg"\r\nContent-Type: image/jpeg\r\n\r\n`;
-  const footer = `\r\n--${boundary}--`;
-  return Buffer.concat([
-    Buffer.from(parts.join('\r\n') + '\r\n', 'utf8'),
-    Buffer.from(imgHeader, 'utf8'),
-    imgBuf,
-    Buffer.from(footer, 'utf8')
-  ]);
 }
 
-function callOpenAI(path, body, contentType) {
-  return new Promise((resolve) => {
-    const options = {
-      hostname: 'api.openai.com',
-      path,
+async function callEdits(prompt, imageB64) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 55000);
+  try {
+    const imgBuffer = Buffer.from(imageB64, 'base64');
+    const imgBlob   = new Blob([imgBuffer], { type: 'image/jpeg' });
+
+    const form = new FormData();
+    form.append('model',   MODEL);
+    form.append('prompt',  prompt);
+    form.append('size',    SIZE);
+    form.append('quality', QUALITY);
+    form.append('n',       '1');
+    form.append('image',   imgBlob, 'site.jpg');  // 'image' not 'image[]'
+
+    const res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
-      headers: {
-        'Content-Type': contentType,
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Length': body.length
-      },
-      timeout: 90000
-    };
-    const req = https.request(options, (res) => {
-      const chunks = [];
-      res.on('data', c => chunks.push(c));
-      res.on('end', () => {
-        try {
-          const json = JSON.parse(Buffer.concat(chunks).toString());
-          if (json.data && json.data[0]) {
-            const img = json.data[0];
-            resolve({ ok:true, url: img.url||null, b64: img.b64_json||null });
-          } else {
-            resolve({ ok:false, error: json.error?.message || JSON.stringify(json) });
-          }
-        } catch(e) { resolve({ ok:false, error: e.message }); }
-      });
+      signal: controller.signal,
+      headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
+      // Do NOT set Content-Type — fetch sets it with boundary automatically
+      body: form
     });
-    req.on('error', e => resolve({ ok:false, error: e.message }));
-    req.on('timeout', () => { req.destroy(); resolve({ ok:false, error:'Timeout' }); });
-    req.write(body);
-    req.end();
-  });
+    const json = await res.json();
+    if (json.data && json.data[0]) {
+      return { ok: true, b64: json.data[0].b64_json || null };
+    }
+    return { ok: false, error: json.error?.message || JSON.stringify(json) };
+  } catch (e) {
+    return { ok: false, error: e.name === 'AbortError' ? 'Timeout (>55s)' : e.message };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 exports.handler = async (event) => {
@@ -135,34 +144,29 @@ exports.handler = async (event) => {
 
   let palette=[], styles=[], location='台灣', lights=[], areaKey='', season='summer', sitePhotoB64=null;
   try {
-    const b = JSON.parse(event.body || '{}');
-    palette      = b.palette      || [];
-    styles       = b.styles       || [];
-    location     = b.location     || '台灣';
-    lights       = b.lights       || [];
-    areaKey      = b.areaKey      || '';
-    season       = b.season       || 'summer';
+    const b    = JSON.parse(event.body || '{}');
+    palette    = b.palette      || [];
+    styles     = b.styles       || [];
+    location   = b.location     || '台灣';
+    lights     = b.lights       || [];
+    areaKey    = b.areaKey      || '';
+    season     = b.season       || 'summer';
     sitePhotoB64 = b.sitePhotoB64 || null;
   } catch(e) { return { statusCode:400, body: JSON.stringify({ error:'Invalid JSON' }) }; }
 
   const CORS = { 'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*' };
-  let result;
 
+  let result;
   if (sitePhotoB64) {
-    // Edit mode: overlay plants on uploaded site photo
-    const prompt   = buildEditPrompt(palette, styles, location, lights, areaKey, season);
-    const boundary = 'boundary' + Date.now();
-    const body     = buildMultipart(boundary, { model:MODEL, prompt, size:SIZE, quality:QUALITY, n:'1' }, sitePhotoB64);
-    result = await callOpenAI('/v1/images/edits', body, `multipart/form-data; boundary=${boundary}`);
+    const prompt = buildEditPrompt(palette, styles, location, season);
+    result = await callEdits(prompt, sitePhotoB64);
   } else {
-    // Generate mode: no site photo
-    const prompt  = buildGeneratePrompt(palette, styles, location, lights, areaKey, season);
-    const reqBody = Buffer.from(JSON.stringify({ model:MODEL, prompt, n:1, size:SIZE, quality:QUALITY }));
-    result = await callOpenAI('/v1/images/generations', reqBody, 'application/json');
+    const prompt = buildGeneratePrompt(palette, styles, location, season);
+    result = await callGenerations(prompt);
   }
 
   if (result.ok) {
-    return { statusCode:200, headers:CORS, body: JSON.stringify({ url:result.url, b64:result.b64 }) };
+    return { statusCode:200, headers:CORS, body: JSON.stringify({ b64: result.b64 }) };
   } else {
     return { statusCode:500, headers:CORS, body: JSON.stringify({ error: result.error }) };
   }
