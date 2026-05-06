@@ -974,8 +974,23 @@ body {
       </div>
     </div>
 
-    <div class="note-box">
-      <strong>完整版功能：</strong>上傳現場照片後，AI 將疊加植栽效果，以 DALL-E 3 生成真實感模擬圖，展示種植後的實際視覺效果。
+    <!-- AI 圖像生成 -->
+    <div id="aiImageBlock" style="margin:1rem 0">
+      <button id="genImgBtn" onclick="generateAIImage()" style="
+        display:block; width:100%; padding:.9rem;
+        border:1px solid var(--black); background:var(--black);
+        color:var(--white); font-family:'DM Mono',monospace;
+        font-size:.75rem; letter-spacing:.12em; cursor:pointer;">
+        ✦ 生成 AI 現場模擬圖
+      </button>
+      <div id="aiImgLoading" style="display:none;text-align:center;padding:1.5rem 0;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--g50)">
+        生成中，約需 15–30 秒…
+      </div>
+      <div id="aiImgError" style="display:none;padding:.6rem;background:#FFF0F0;font-family:'DM Mono',monospace;font-size:.6rem;color:#c00;margin-top:.5rem"></div>
+      <img id="aiImgResult" style="display:none;width:100%;margin-top:.75rem;border:1px solid var(--line)" alt="AI 現場模擬">
+      <div id="aiImgNote" style="display:none;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50);margin-top:.4rem;text-align:right">
+        gpt-image-1 · 每次約 NT$1–2
+      </div>
     </div>
 
     <div class="section-label">四季景觀</div>
@@ -1429,6 +1444,14 @@ function calcPrice(plant) {
 
 /* ── Render ──────────────────────────────────────────── */
 function renderResults(palette, inputs) {
+  _lastPalette = palette;
+  _lastInputs  = inputs;
+  const btn = document.getElementById('genImgBtn');
+  if (btn) { btn.textContent = '✦ 生成 AI 現場模擬圖'; btn.style.display = 'block'; }
+  const imgEl = document.getElementById('aiImgResult');
+  if (imgEl) imgEl.style.display = 'none';
+  const note = document.getElementById('aiImgNote');
+  if (note) note.style.display = 'none';
   _renderHeader(palette, inputs);
   _renderLayerDiag(palette);
   _renderSeasons(palette);
@@ -1588,6 +1611,60 @@ function handlePietPhoto(input) {
     prev.style.display = 'block';
   };
   reader.readAsDataURL(input.files[0]);
+}
+
+/* ── AI Image Generation ─────────────────────────────── */
+let _lastPalette = [], _lastInputs = {};
+
+function generateAIImage() {
+  const btn     = document.getElementById('genImgBtn');
+  const loading = document.getElementById('aiImgLoading');
+  const errBox  = document.getElementById('aiImgError');
+  const imgEl   = document.getElementById('aiImgResult');
+  const note    = document.getElementById('aiImgNote');
+
+  btn.style.display     = 'none';
+  loading.style.display = 'block';
+  errBox.style.display  = 'none';
+  imgEl.style.display   = 'none';
+  note.style.display    = 'none';
+
+  fetch('/.netlify/functions/generate-image', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      palette:  _lastPalette.map(p => ({ name_zh: p.name_zh, role: p._role })),
+      styles:   _lastInputs.styles  || [],
+      location: _lastInputs.location || '台灣'
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    loading.style.display = 'none';
+    if (data.url) {
+      imgEl.src = data.url;
+      imgEl.style.display = 'block';
+      note.style.display  = 'block';
+      btn.textContent = '↺ 重新生成';
+      btn.style.display = 'block';
+    } else if (data.b64) {
+      imgEl.src = 'data:image/png;base64,' + data.b64;
+      imgEl.style.display = 'block';
+      note.style.display  = 'block';
+      btn.textContent = '↺ 重新生成';
+      btn.style.display = 'block';
+    } else {
+      errBox.textContent  = '生成失敗：' + (data.error || '未知錯誤');
+      errBox.style.display = 'block';
+      btn.style.display   = 'block';
+    }
+  })
+  .catch(e => {
+    loading.style.display = 'none';
+    errBox.textContent    = '連線失敗：' + e.message;
+    errBox.style.display  = 'block';
+    btn.style.display     = 'block';
+  });
 }
 
 /* ── Fallback data ───────────────────────────────────── */
