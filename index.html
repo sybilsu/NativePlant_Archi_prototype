@@ -261,6 +261,21 @@ body {
 .sb3 { background:#ECEEF0 }
 .sb4 { background:#EAE9E6 }
 
+/* ── PIET PHOTO UPLOAD ───────────────────── */
+.piet-upload-area {
+  width:100%; aspect-ratio:16/9;
+  border:1px dashed var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; background:var(--off);
+  text-align:center; position:relative; overflow:hidden;
+  margin-top:.75rem;
+}
+.piet-upload-area:hover { border-color:var(--g50) }
+.piet-upload-placeholder { pointer-events:none }
+.piet-upload-icon { font-size:1.4rem; color:var(--g50); margin-bottom:.4rem }
+.piet-upload-text { font-family:'Noto Serif TC',serif; font-size:.8rem; color:var(--black) }
+.piet-upload-sub { font-family:'DM Mono',monospace; font-size:.55rem; color:var(--g50); margin-top:.25rem }
+
 /* ── CLIMATE GRID ────────────────────────── */
 .climate-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line) }
 .climate-item {
@@ -690,7 +705,50 @@ body {
 
     <div class="form-group">
       <label class="form-label">Location · 地點</label>
-      <input type="text" class="form-input" placeholder="台中市西區、南投縣埔里鎮…" value="台中市北區">
+      <select class="form-select" id="locationSelect" onchange="handleLocationChange(this)">
+        <optgroup label="台中市">
+          <option selected>台中市北區</option>
+          <option>台中市中區</option><option>台中市東區</option><option>台中市西區</option>
+          <option>台中市南區</option><option>台中市西屯區</option><option>台中市南屯區</option>
+          <option>台中市北屯區</option><option>台中市豐原區</option><option>台中市東勢區</option>
+          <option>台中市大甲區</option><option>台中市清水區</option><option>台中市沙鹿區</option>
+          <option>台中市梧棲區</option><option>台中市后里區</option><option>台中市神岡區</option>
+          <option>台中市潭子區</option><option>台中市大雅區</option><option>台中市新社區</option>
+          <option>台中市石岡區</option><option>台中市外埔區</option><option>台中市大安區</option>
+          <option>台中市烏日區</option><option>台中市大肚區</option><option>台中市龍井區</option>
+          <option>台中市霧峰區</option><option>台中市太平區</option><option>台中市大里區</option>
+          <option>台中市和平區</option>
+        </optgroup>
+        <optgroup label="彰化縣">
+          <option>彰化市</option><option>鹿港鎮</option><option>和美鎮</option>
+          <option>員林市</option><option>溪湖鎮</option><option>田中鎮</option>
+          <option>北斗鎮</option><option>二林鎮</option><option>線西鄉</option>
+          <option>伸港鄉</option><option>福興鄉</option><option>秀水鄉</option>
+          <option>花壇鄉</option><option>芬園鄉</option><option>大村鄉</option>
+          <option>埔鹽鄉</option><option>埔心鄉</option><option>永靖鄉</option>
+          <option>社頭鄉</option><option>二水鄉</option><option>田尾鄉</option>
+          <option>埤頭鄉</option><option>芳苑鄉</option><option>大城鄉</option>
+          <option>竹塘鄉</option><option>溪州鄉</option>
+        </optgroup>
+        <optgroup label="南投縣">
+          <option>南投市</option><option>草屯鎮</option><option>埔里鎮</option>
+          <option>竹山鎮</option><option>集集鎮</option><option>名間鄉</option>
+          <option>中寮鄉</option><option>國姓鄉</option><option>仁愛鄉</option>
+          <option>魚池鄉</option><option>水里鄉</option><option>信義鄉</option>
+          <option>鹿谷鄉</option>
+        </optgroup>
+        <optgroup label="雲林縣">
+          <option>斗六市</option><option>斗南鎮</option><option>虎尾鎮</option>
+          <option>西螺鎮</option><option>北港鎮</option><option>土庫鎮</option>
+          <option>二崙鄉</option><option>莿桐鄉</option><option>林內鄉</option>
+          <option>古坑鄉</option><option>大埤鄉</option><option>褒忠鄉</option>
+          <option>東勢鄉</option><option>台西鄉</option><option>崙背鄉</option>
+          <option>麥寮鄉</option><option>元長鄉</option><option>四湖鄉</option>
+          <option>口湖鄉</option><option>水林鄉</option>
+        </optgroup>
+        <option value="__other__">其他 / 手動輸入…</option>
+      </select>
+      <input type="text" class="form-input" id="locationCustom" placeholder="請輸入地點…" style="display:none;margin-top:.5rem">
     </div>
     <div class="input-row">
       <div class="form-group">
@@ -802,6 +860,18 @@ body {
     </div>
 
     <div class="divider"></div>
+    <div class="section-label">Piet 案例參考 · 選填</div>
+    <div class="piet-upload-area" id="pietUploadArea" onclick="document.getElementById('pietPhotoInput').click()">
+      <div class="piet-upload-placeholder" id="pietUploadPlaceholder">
+        <div class="piet-upload-icon">↑</div>
+        <div class="piet-upload-text">上傳 Piet Oudolf 設計案例照片</div>
+        <div class="piet-upload-sub">選填 · 幫助 AI 對應設計風格與氛圍</div>
+      </div>
+      <img id="pietPhotoPreview" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0">
+    </div>
+    <input type="file" id="pietPhotoInput" accept="image/*" style="display:none" onchange="handlePietPhoto(this)">
+
+    <div class="divider"></div>
     <div class="section-label">自然語言描述</div>
     <div class="form-group">
       <label class="form-label">Describe in your own words</label>
@@ -896,7 +966,7 @@ body {
         <div style="position:absolute;top:1rem;left:1rem;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--g50);letter-spacing:.08em">SIMULATED VIEW</div>
         <div class="photo-badge">
           <div>
-            <div class="pbtext">台中市北區 · 南向 · 7㎡ · 中層</div>
+            <div class="pbtext" id="pbLocationText">台中市北區 · 南向 · 7㎡ · 中層</div>
             <div class="pbtext" style="margin-top:.1rem;color:var(--g20)">Summer · 16:00 · Simulated</div>
           </div>
           <div class="pbtag">AI MOCK</div>
@@ -1140,7 +1210,7 @@ body {
         <span class="qmk">No.</span><span class="qmv">QT-2026-0328</span>
         <span class="qmk">日期</span><span class="qmv">2026.03.28</span>
         <span class="qmk">設計</span><span class="qmv">輕盈原野 Airy Prairie</span>
-        <span class="qmk">場地</span><span class="qmv">台中市北區 · 南向 · 7㎡</span>
+        <span class="qmk">場地</span><span class="qmv" id="qtLocationText">台中市北區 · 南向 · 7㎡</span>
       </div>
     </div>
 
@@ -1294,12 +1364,18 @@ function collectInputs() {
   const styles = [...document.querySelectorAll('[data-style].selected')].map(c => c.dataset.style);
   const areaEl  = document.getElementById('areaSelect');
   const areaKey = areaEl ? areaEl.value : '中型 5–10㎡';
+  const locSel  = document.getElementById('locationSelect');
+  const locCustom = document.getElementById('locationCustom');
+  const location = locSel && locSel.value === '__other__'
+    ? (locCustom ? locCustom.value || '未指定' : '未指定')
+    : (locSel ? locSel.value : '台中市北區');
   return {
     lights:     lights.length ? lights : ['full','partial','shade'],
     moists:     moists.length ? moists : ['dry','mesic','wet'],
     styles,
     areaKey,
-    areaFactor: AREA_FACTOR[areaKey] || 1.0
+    areaFactor: AREA_FACTOR[areaKey] || 1.0,
+    location
   };
 }
 
@@ -1360,6 +1436,11 @@ function _renderHeader(palette, inputs) {
   if (inputs.lights.includes('full')) tags.push('全日照');
   if (inputs.lights.includes('shade')) tags.push('耐陰性');
   document.querySelector('.tag-row').innerHTML = tags.map(t=>`<span class="tag">${t}</span>`).join('');
+  const locStr = (inputs.location || '台中市北區') + ' · ' + inputs.areaKey;
+  const pb = document.getElementById('pbLocationText');
+  const qt = document.getElementById('qtLocationText');
+  if (pb) pb.textContent = locStr;
+  if (qt) qt.textContent = locStr;
 }
 
 function _renderLayerDiag(palette) {
@@ -1474,6 +1555,25 @@ function _renderTab3(palette, inputs) {
     `<tr class="quote-subtotal"><td colspan="4">植物材料小計</td><td class="qtmono" style="text-align:right">${total.toLocaleString()}</td></tr>
      <tr class="quote-subtotal"><td colspan="4">介質、盆器、運費（估算）</td><td class="qtmono" style="text-align:right">${misc.toLocaleString()}</td></tr>
      <tr class="quote-total"><td colspan="4">Total · 合計</td><td style="text-align:right">NT$ ${grand.toLocaleString()}</td></tr>`;
+}
+
+/* ── Location dropdown ───────────────────────────────── */
+function handleLocationChange(sel) {
+  const custom = document.getElementById('locationCustom');
+  custom.style.display = sel.value === '__other__' ? 'block' : 'none';
+}
+
+/* ── Piet photo upload ───────────────────────────────── */
+function handlePietPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('pietUploadPlaceholder').style.display = 'none';
+    const prev = document.getElementById('pietPhotoPreview');
+    prev.src = e.target.result;
+    prev.style.display = 'block';
+  };
+  reader.readAsDataURL(input.files[0]);
 }
 
 /* ── Fallback data ───────────────────────────────────── */
