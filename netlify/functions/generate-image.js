@@ -1,9 +1,9 @@
 const https = require('https');
 
-/* 成本控制：每次呼叫用 1024x1024 standard，約 $0.04/張 */
+/* 成本控制：每次呼叫用 1024x1024 medium，約 $0.04/張 */
 const MODEL  = 'gpt-image-1';
 const SIZE   = '1024x1024';
-const QUALITY = 'standard';
+const QUALITY = 'medium';
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
