@@ -1633,9 +1633,22 @@ function generateAIImage() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      palette:  _lastPalette.map(p => ({ name_zh: p.name_zh, role: p._role })),
-      styles:   _lastInputs.styles  || [],
-      location: _lastInputs.location || '台灣'
+      palette: _lastPalette.map(p => ({
+        name_zh:      p.name_zh,
+        name_latin:   p.name_latin   || '',
+        role:         p._role,
+        height_cm:    p.height_cm    || null,
+        architecture: p.architecture || '',
+        flower_color: p.flower_color || '',
+        bloom_months: p.bloom_months || [],
+        match_tags:   p.match_tags   || [],
+        piet_analog:  p.piet_analog  || '',
+        seasons:      p.seasons      || {}
+      })),
+      styles:   _lastInputs.styles   || [],
+      location: _lastInputs.location || '台灣',
+      lights:   _lastInputs.lights   || [],
+      areaKey:  _lastInputs.areaKey  || ''
     })
   })
   .then(r => r.json())
